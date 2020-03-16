@@ -6,7 +6,9 @@ const ReplaceHashInFileWebpackPlugin = require('replace-hash-in-file-webpack-plu
 const CopyPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
-module.exports = {
+module.exports = (env, argv) =>{
+    return  {
+    watch:  argv.mode != 'production',
     entry: {
         'background': './src/background.js',
         'popup': './src/popup/js/popup.js',
@@ -98,3 +100,4 @@ module.exports = {
         })
     ]
 };
+}

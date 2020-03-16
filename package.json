@@ -6,7 +6,6 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --mode development",
-    
     "build": "webpack --mode production",
     "serve-popup": "npx http-server ./dist -c-1 -o /popup.html",
     "serve-options": "npx http-server ./dist -c-1 -o /options.html"
