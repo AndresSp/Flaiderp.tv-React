@@ -1,0 +1,18 @@
+{
+    "config": {
+        "enable": true,
+        "intervals": {
+            "check": 5,
+            "notifications": 1
+        },
+        "streams": 
+        {
+            "Sunny": [52326616, true], 
+            "Brenditz": [94415649, true],
+            "gabeegaming": [127331253, true],
+            "HirukoRL": [133505839, true],
+            "Adalokumura1": [196124269, true],
+            "Valkryon365": [227705719, true]
+        }
+    }
+}
