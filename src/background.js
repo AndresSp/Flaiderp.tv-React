@@ -1,11 +1,5 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import './index.css';
+import { config } from "./config/config.json";
 
-const App = () => {
-  return (
-    <div>
-        <div>Welcome to my-webpack-react-starter</div>
-    </div>
-  );
-};
+console.log(config)
+
+

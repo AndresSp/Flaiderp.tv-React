@@ -76,8 +76,8 @@ module.exports = (env, argv) =>{
             chunks: ['options']
         }),
         new CopyPlugin([
-            { from: './manifest.json' },
-            { from: './config.json' },
+            { from: './src/manifest.json' },
+            { from: './src/config/config.json'  },
             { from: './src/assets/icon', to: './icons'}
         ]),
         new ReplaceHashInFileWebpackPlugin([{

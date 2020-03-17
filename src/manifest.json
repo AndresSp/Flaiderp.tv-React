@@ -21,7 +21,7 @@
       "128": "icons/128.png"
     },
     "web_accessible_resources": [
-      "config.json"
+      "./config/config.json"
     ],
     "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com/; object-src 'self'"
 }

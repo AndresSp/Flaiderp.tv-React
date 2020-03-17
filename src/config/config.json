@@ -5,8 +5,7 @@
             "check": 5,
             "notifications": 1
         },
-        "streams": 
-        {
+        "streams": {
             "Sunny": [52326616, true], 
             "Brenditz": [94415649, true],
             "gabeegaming": [127331253, true],
