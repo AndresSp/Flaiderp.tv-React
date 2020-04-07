@@ -5,7 +5,7 @@ Flaiderp.tv is a chrome extension that notifies you if [Flaiveth](https://www.tw
 ## Installation
 
 ```
-git clone https://github.com/AndresSp/Flaiderp.tv-React
+git clone https://github.com/AndresSp/Flaiderp.tv-React.git
 ```
 More Tools > Extensions > Enable Developer Mode > Load unpacked (Load root project's directory)
 
