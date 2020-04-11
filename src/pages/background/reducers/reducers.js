@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { getStreamsReducer } from './getStreams'
+import { getStreamsReducer } from './fetchStreams'
 
 
 export default combineReducers({

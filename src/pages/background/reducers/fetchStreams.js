@@ -1,4 +1,4 @@
-import { FETCH_STREAMS_PENDING, FETCH_STREAMS_SUCCESSFULLY, FETCH_STREAMS_ERROR } from "../../../shared/actions/getStreams"
+import { FETCH_STREAMS_PENDING, FETCH_STREAMS_SUCCESSFULLY, FETCH_STREAMS_ERROR } from "../../../shared/actions/fetchStreams"
 
 
 const initialState = {
