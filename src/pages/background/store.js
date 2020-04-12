@@ -4,11 +4,13 @@ import { createLogger } from 'redux-logger'
 import thunk from 'redux-thunk'
 import reducer from './reducers/reducers'
 import { composeWithDevTools } from 'remote-redux-devtools'
+import configFile from "../../assets/config/config.json";
   
   const initialState = {
-    getStreams: {
+    config: configFile,
+    fetchStreams: {
       pending: false,
-      streams: [],
+      data: [],
       error: null
     }
   }

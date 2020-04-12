@@ -3,11 +3,11 @@ import { FETCH_STREAMS_PENDING, FETCH_STREAMS_SUCCESSFULLY, FETCH_STREAMS_ERROR 
 
 const initialState = {
     pending: false,
-    streams: [],
+    data: [],
     error: null
 }
 
-export const getStreamsReducer = (state = initialState, action) => {
+export const fetchStreamsReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_STREAMS_PENDING:
             return {
@@ -19,7 +19,7 @@ export const getStreamsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pending: false,
-                streams: action.payload.data
+                data: action.payload.data
             }
         
         case FETCH_STREAMS_ERROR:
@@ -34,6 +34,6 @@ export const getStreamsReducer = (state = initialState, action) => {
     }
 }
 
-export const selectStreams = state => state.streams;
+export const selectStreams = state => state.fetchStreams.data;
 export const selectStreamsPending = state => state.pending;
 export const selectStreamsError = state => state.error;

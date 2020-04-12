@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux'
-import { getStreamsReducer } from './fetchStreams'
+import { configReducer } from './config'
+import { fetchStreamsReducer } from './fetchStreams'
 
 
 export default combineReducers({
-    getStreams: getStreamsReducer
+    config: configReducer,
+    fetchStreams: fetchStreamsReducer
 })
