@@ -2,7 +2,9 @@ import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully } from
 import { CLIENT_ID } from "../env.json";
 
 
-export const fetchStreams = (dispatch, userIds) => {
+export const fetchStreams = (userIds) => {
+    return (dispatch, getState) => {
+        //console.log(getState())
         dispatch(fetchStreamsPending())
 
         const url = new URL('https://api.twitch.tv/helix/streams');
@@ -23,4 +25,5 @@ export const fetchStreams = (dispatch, userIds) => {
         })
         .then((data) => dispatch(fetchStreamsSuccessfully(data)))
         .catch((error) => dispatch(fetchStreamsError(error)))
+    }
 }

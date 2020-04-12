@@ -39,6 +39,6 @@ browser.runtime.onInstalled.addListener(async (details) => {
  })
 
  const onFetchStreams = async (enabledStreamers) => {
-    await fetchStreams(store.dispatch, enabledStreamers)
+    await store.dispatch(fetchStreams(enabledStreamers))
  }
 

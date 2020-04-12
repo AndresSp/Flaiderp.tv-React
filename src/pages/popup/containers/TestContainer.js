@@ -4,6 +4,7 @@ import store from '../../background/store';
 import { fetchStreams } from '../../../modules/webAPIs';
 import { CLIENT_ID } from '../../../env.json';
 import { selectStreams } from '../../background/reducers/fetchStreams';
+import { bindActionCreators } from 'redux';
 
 class TestContainer extends Component {
     constructor(props) {
@@ -12,9 +13,8 @@ class TestContainer extends Component {
 
     render(){
         const { streams, onfetchStreams } = this.props;
-
         return <div> 
-            <button onClick={onfetchStreams}>FetchStreams</button>
+            <button onClick={ () => onfetchStreams([144360146]) }>FetchStreams</button>
             {
                 streams.map(stream => <div key={stream.id}>{stream.title}</div>) 
             } 
@@ -27,7 +27,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onfetchStreams: () => fetchStreams(dispatch, [44445592])
+    onfetchStreams: (userIds) => fetchStreams(userIds)(dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TestContainer)
