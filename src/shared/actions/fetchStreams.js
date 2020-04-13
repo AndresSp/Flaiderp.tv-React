@@ -1,9 +1,10 @@
+export const FETCH_STREAMS = 'FETCH_STREAMS'
 export const FETCH_STREAMS_SUCCESSFULLY = 'FETCH_STREAMS_SUCCESSFULLY'
-export const FETCH_STREAMS_PENDING = 'FETCH_STREAMS_PENDING'
 export const FETCH_STREAMS_ERROR = 'FETCH_STREAMS_ERROR'
 
-export const fetchStreamsPending = () => ({
-    type: FETCH_STREAMS_PENDING
+export const fetchStreams = (streamers) => ({
+    type: FETCH_STREAMS,
+    streamers: streamers
 })
 
 export const fetchStreamsSuccessfully = (response) => ({

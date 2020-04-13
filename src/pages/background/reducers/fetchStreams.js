@@ -1,4 +1,4 @@
-import { FETCH_STREAMS_PENDING, FETCH_STREAMS_SUCCESSFULLY, FETCH_STREAMS_ERROR } from "../../../shared/actions/fetchStreams"
+import { FETCH_STREAMS, FETCH_STREAMS_SUCCESSFULLY, FETCH_STREAMS_ERROR } from "../../../shared/actions/fetchStreams"
 
 
 const initialState = {
@@ -9,7 +9,7 @@ const initialState = {
 
 export const fetchStreamsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FETCH_STREAMS_PENDING:
+        case FETCH_STREAMS:
             return {
                 ...state,
                 pending: true

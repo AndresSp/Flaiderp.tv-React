@@ -16,7 +16,6 @@ rootDiv.id = 'root'
 document.body.insertBefore(rootDiv, document.body.childNodes[0])
 
 store.ready().then(async () => {
-  //const response = await getStreams(store.dispatch, enabledStreamers)
   ReactDOM.render(
     <Provider store={store}>
       <App/>

@@ -1,10 +1,7 @@
 import { connect } from 'react-redux'
 import React, { Component } from 'react'
-import store from '../../background/store';
-import { fetchStreams } from '../../../modules/webAPIs';
-import { CLIENT_ID } from '../../../env.json';
 import { selectStreams } from '../../background/reducers/fetchStreams';
-import { bindActionCreators } from 'redux';
+import { fetchStreams } from '../../../shared/actions/fetchStreams';
 
 class TestContainer extends Component {
     constructor(props) {
@@ -12,9 +9,9 @@ class TestContainer extends Component {
     }
 
     render(){
-        const { streams, onfetchStreams } = this.props;
+        const { streams, enabledStreamers, onfetchStreams } = this.props;
         return <div> 
-            <button onClick={ () => onfetchStreams([144360146]) }>FetchStreams</button>
+            <button onClick={ () => onfetchStreams(enabledStreamers) }>FetchStreams</button>
             {
                 streams.map(stream => <div key={stream.id}>{stream.title}</div>) 
             } 
@@ -23,11 +20,12 @@ class TestContainer extends Component {
 }
 
 const mapStateToProps = state => ({
+    enabledStreamers: state.config.streamers.enabled,
     streams: selectStreams(state)
 })
 
 const mapDispatchToProps = dispatch => ({
-    onfetchStreams: (userIds) => fetchStreams(userIds)(dispatch)
+    onfetchStreams: (streamers) => dispatch(fetchStreams(streamers))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TestContainer)
