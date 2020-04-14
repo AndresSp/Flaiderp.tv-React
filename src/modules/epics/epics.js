@@ -4,6 +4,8 @@ import { from, of } from "rxjs";
 //import { switchMap } from 'rxjs/operator/switchMap';
 import { map, catchError, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
 import { fetchStreamsByUserId } from "../apis/twitch";
+import { changeStatus } from "../apis/extension";
+import { saveConfig, TOGGLE_STATUS } from "../../shared/actions/config";
 
 
 export const fetchStreamsEpic = (action$, state$) => action$.pipe(
@@ -18,6 +20,17 @@ export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     )
 )
 
+export const enableStreamsEpic = (action$, state$) => action$.pipe(
+    ofType(TOGGLE_STATUS),
+    switchMap(action => {
+        const status = state$.value.config.status
+        return from(changeStatus(status)).pipe(
+            map(response => saveConfig())
+        )
+    })
+)
+
 export default combineEpics(
-    fetchStreamsEpic
+    fetchStreamsEpic,
+    enableStreamsEpic
 );

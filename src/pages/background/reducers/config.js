@@ -1,22 +1,16 @@
 import configFile from "../../../assets/config/config.json";
-import { STATUS_ENABLED, STATUS_DISABLED, MAIN_STREAM_SETTED } from "../../../shared/actions/config";
+import { MAIN_STREAM_SETTED, TOGGLE_STATUS } from "../../../shared/actions/config";
 
 const initialState = configFile
 
 export const configReducer = (state = initialState, action) => {
     switch (action.type) {
-        case STATUS_ENABLED:
+        case TOGGLE_STATUS:
             return {
                 ...state,
-                status: true
+                status: !state.status
             }
 
-        case STATUS_DISABLED:
-            return {
-                ...state,
-                status: false
-            }
-        
         case MAIN_STREAM_SETTED:
             const streamers = {
                 ...state.streamers,
@@ -32,3 +26,6 @@ export const configReducer = (state = initialState, action) => {
             return state
     }
 }
+
+export const selectStatus = state => state.config.status;
+export const selectEnabledStreamers = state => state.config.streamers.enabled;

@@ -1,5 +1,4 @@
-export const STATUS_ENABLED = 'STATUS_ENABLED'
-export const STATUS_DISABLED = 'STATUS_DISABLED'
+export const TOGGLE_STATUS = 'TOGGLE_STATUS'
 
 export const FETCH_INTERVAL_SETTED = 'FETCH_INTERVAL_SETTED'
 export const NOTIFICATIONS_INTERVAL_SETTED = 'NOTIFICATIONS_INTERVAL_SETTED'
@@ -13,13 +12,11 @@ export const ENABLED_STREAMER_REMOVED = 'ENABLED_STREAMER_REMOVED'
 export const DISABLED_STREAMER_ADDED = 'DISABLED_STREAMER_ADDED'
 export const DISABLED_STREAMER_REMOVED = 'DISABLED_STREAMER_REMOVED'
 
+export const CONFIG_SAVED = 'CONFIG_SAVED'
 
-export const setStatusEnable = () => ({
-    type: STATUS_ENABLED
-})
 
-export const setStatusDisable = () => ({
-    type: STATUS_DISABLED
+export const toggleStatus = () => ({
+    type: TOGGLE_STATUS
 })
 
 export const setfetchInterval = (interval) => ({
@@ -59,5 +56,9 @@ export const addDisabledStreamer = (streamer) => ({
 export const removeDisabledStreamer = (streamer) => ({
     type: DISABLED_STREAMER_REMOVED,
     streamer: streamer
+})
+
+export const saveConfig = () => ({
+    type: CONFIG_SAVED
 })
 
