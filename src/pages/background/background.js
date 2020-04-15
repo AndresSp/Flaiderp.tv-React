@@ -12,19 +12,37 @@ const fakeRequest = {"data":[{"id":"37168856816","user_id":"94415649","user_name
 
 
 browser.runtime.onInstalled.addListener(async (details) => {
-    await browser.storage.sync.set(configFile)
-    browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
+   const currentVersion = await chrome.runtime.getManifest().version
+   const reason = details.reason
+
+   switch (reason) {
+      case 'install':
+         await browser.storage.sync.clear()
+         break;
+      case 'update':
+         if(currentVersion === '2.0.0'){
+            await browser.storage.sync.clear()
+         }
+         break;
+      case 'chrome_update':
+      case 'shared_module_update':
+      default:
+         console.log('Other install events within the browser')
+         break;
+   }
+   console.log(currentVersion)
+
+    await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
  })
 
  browser.storage.onChanged.addListener(async (changes) => {
-    const config = await browser.storage.sync.get()
-
+    console.log(changes)
  })
 
  browser.alarms.onAlarm.addListener(async ({ name }) => {
-    const config = await browser.storage.sync.get()
-    const status = config.status
-    const enabledStreamers = config.streamers.enabled
+   const currentState = store.getState()
+   const status = currentState.config.status
+   const enabledStreamers = currentState.config.streamers.enabled
      switch (name) {
          case 'fetchStreams':
             await onFetchStreams(enabledStreamers)

@@ -20,17 +20,17 @@ export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     )
 )
 
-export const enableStreamsEpic = (action$, state$) => action$.pipe(
-    ofType(TOGGLE_STATUS),
-    switchMap(action => {
-        const status = state$.value.config.status
-        return from(changeStatus(status)).pipe(
-            map(response => saveConfig())
-        )
-    })
-)
+// export const enableStreamsEpic = (action$, state$) => action$.pipe(
+//     ofType(TOGGLE_STATUS),
+//     switchMap(action => {
+//         const status = state$.value.config.status
+//         return from(changeStatus(status)).pipe(
+//             map(response => saveConfig())
+//         )
+//     })
+// )
 
 export default combineEpics(
     fetchStreamsEpic,
-    enableStreamsEpic
+    //enableStreamsEpic
 );

@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'remote-redux-devtools'
 import configFile from "../../assets/config/config.json";
 import { createEpicMiddleware } from 'redux-observable'
 import rootEpics from '../../modules/epics/epics'
+import { persistStore } from 'redux-persist'
   
   const initialState = {
     config: configFile,
@@ -47,5 +48,7 @@ import rootEpics from '../../modules/epics/epics'
   wrapStore(store, {
     portName: 'FLAIDERPTV',
   })
+
+  const persistor = persistStore(store)
   
   export default store
