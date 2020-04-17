@@ -1,4 +1,4 @@
-import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH_STREAMS, fetchStreams } from "../../shared/actions/fetchStreams";
+import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH_STREAMS, fetchStreams, fetchStreamsCleared } from "../../shared/actions/fetchStreams";
 import { combineEpics, ofType } from "redux-observable";
 import { from, of } from "rxjs";
 //import { switchMap } from 'rxjs/operator/switchMap';
@@ -30,16 +30,14 @@ export const resetWhenEnabledEpic = (action$, state$) => action$.pipe(
     ]))
 )
 
-// export const resetWhenEnabledEpic = (action$, state$) => action$.pipe(
-//     ofType(TOGGLE_STATUS),
-//     filter(() => state$.value.config.status),
-//     mapTo(fetchStreams([
-//         state$.value.config.streamers.main, 
-//         ...state$.value.config.streamers.enabled
-//     ]))
-// )
+export const clearWhenDisabledEpic = (action$, state$) => action$.pipe(
+    ofType(TOGGLE_STATUS),
+    filter(() => !state$.value.config.status),
+    mapTo(fetchStreamsCleared())
+)
 
 export default combineEpics(
     fetchStreamsEpic,
-    resetWhenEnabledEpic
+    resetWhenEnabledEpic,
+    clearWhenDisabledEpic
 );

@@ -1,6 +1,7 @@
 export const FETCH_STREAMS = 'FETCH_STREAMS'
 export const FETCH_STREAMS_SUCCESSFULLY = 'FETCH_STREAMS_SUCCESSFULLY'
 export const FETCH_STREAMS_ERROR = 'FETCH_STREAMS_ERROR'
+export const FETCH_STREAMS_CLEARED = 'FETCH_STREAMS_CLEARED'
 
 export const fetchStreams = (streamers) => ({
     type: FETCH_STREAMS,
@@ -15,4 +16,8 @@ export const fetchStreamsSuccessfully = (response) => ({
 export const fetchStreamsError = (error) => ({
     type: FETCH_STREAMS_ERROR,
     error: error
+})
+
+export const fetchStreamsCleared = () => ({
+    type: FETCH_STREAMS_CLEARED
 })
