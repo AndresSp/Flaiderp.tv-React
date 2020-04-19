@@ -1,15 +1,19 @@
 import configFile from "../../../assets/config/config.json";
-import { MAIN_STREAM_SETTED, TOGGLE_STATUS, MAIN_STREAM_CLEARED, STREAMER_ENABLED, STREAMER_DISABLED } from "../../../shared/actions/config";
+import { MAIN_STREAM_SETTED, TOGGLE_STATUS, MAIN_STREAM_CLEARED, STREAMER_ENABLED, STREAMER_DISABLED, REORDERED_STREAMERS } from "../../../shared/actions/config";
 
 const initialState = configFile
 
 export const configReducer = (state = initialState, action) => {
     switch (action.type) {
         case TOGGLE_STATUS:
-            console.log('state', state)
             return {
                 ...state,
                 status: !state.status
+            }
+        case REORDERED_STREAMERS:
+            return {
+                ...state,
+                streamers: action.streamers
             }
 
         case MAIN_STREAM_SETTED:
@@ -78,6 +82,7 @@ export const configReducer = (state = initialState, action) => {
 }
 
 export const selectStatus = state => state.config.status;
+export const selectStreamers = state => state.config.streamers;
 export const selectMainStreamer = state => state.config.streamers.main;
 export const selectEnabledStreamers = state => state.config.streamers.enabled;
 export const selectDisabledStreamers = state => state.config.streamers.disabled;

@@ -9,6 +9,8 @@ export const MAIN_STREAM_CLEARED = 'MAIN_STREAM_CLEARED'
 export const STREAMER_ENABLED = 'STREAMER_ENABLED'
 export const STREAMER_DISABLED = 'STREAMER_DISABLED'
 
+export const REORDERED_STREAMERS = 'REORDERED_STREAMERS'
+
 export const CONFIG_SAVED = 'CONFIG_SAVED'
 
 
@@ -26,9 +28,10 @@ export const setNotificationInterval = (interval) => ({
     interval: interval
 })
 
-export const setMainStreamer = (from, streamer) => ({
+export const setMainStreamer = (source, target, streamer) => ({
     type: MAIN_STREAM_SETTED,
-    from: from,
+    source: source,
+    target: target,
     streamer: streamer
 })
 
@@ -36,14 +39,23 @@ export const clearMainStreamer = () => ({
     type: MAIN_STREAM_CLEARED
 })
 
-export const enableStreamer = (streamer) => ({
+export const enableStreamer = (source, target, streamer) => ({
     type: STREAMER_ENABLED,
+    source: source,
+    target: target,
     streamer: streamer
 })
 
-export const disableStreamer = (streamer) => ({
+export const disableStreamer = (source, target, streamer) => ({
     type: STREAMER_DISABLED,
+    source: source,
+    target: target,
     streamer: streamer
+})
+
+export const reorderStreamers = (streamers) => ({
+    type: REORDERED_STREAMERS,
+    streamers: streamers
 })
 
 export const saveConfig = () => ({

@@ -2,9 +2,7 @@ import React from 'react';
 import TestContainer from '../containers/TestContainer';
 
 const App = () => (
-    <div>
-      <TestContainer/>
-    </div>
+    <TestContainer/>
   )
 
 export default App

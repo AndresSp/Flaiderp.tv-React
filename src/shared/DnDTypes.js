@@ -1,0 +1,9 @@
+export const DndItemTypes = {
+    STREAMER : 'STREAMER'
+}
+
+export const DndContainerTypes = {
+    MAIN_STREAMER: 'MAIN_STREAMER',
+    ENABLED_STREAMERS: 'ENABLED_STREAMERS',
+    DISABLED_STREAMERS: 'DISABLED_STREAMERS'
+}

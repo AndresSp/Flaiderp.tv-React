@@ -5,7 +5,9 @@
         "notifications": 1
     },
     "streamers": {
-        "main": 144360146,
+        "main": [
+            144360146
+        ],
         "enabled": [
             52326616, 
             94415649,
