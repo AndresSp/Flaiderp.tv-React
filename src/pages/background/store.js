@@ -4,16 +4,22 @@ import { createLogger } from 'redux-logger'
 import reducer from './reducers/reducers'
 import { composeWithDevTools } from 'remote-redux-devtools'
 import configFile from "../../assets/config/config.json";
+import configTestFile from "../../assets/config/configTest.json";
 import { createEpicMiddleware } from 'redux-observable'
 import rootEpics from '../../modules/epics/epics'
 import { persistStore } from 'redux-persist'
   
   const initialState = {
     config: configFile,
+    //config: configTestFile,
     fetchStreams: {
       pending: false,
       data: [],
       error: null
+    },
+    notifications: {
+      queue: [],
+      pending: undefined
     }
   }
 

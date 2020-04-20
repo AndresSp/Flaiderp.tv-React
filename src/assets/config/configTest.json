@@ -1,0 +1,20 @@
+{
+    "status": true,
+    "intervals": {
+        "check": 5,
+        "notifications": 1
+    },
+    "streamers": {
+        "main": [
+            144360146
+        ],
+        "enabled": [
+            44880944,
+            105458682,
+            103588982,
+            94055227
+        ],
+        "disabled": []
+    }
+    
+}
