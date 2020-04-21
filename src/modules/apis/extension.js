@@ -1,9 +1,9 @@
 import * as browser from 'webextension-polyfill'
 
-export const createNotification = async (stream) => {
+export const createNotification = async (stream, profileImg) => {
     const userName = stream.user_name
     const streamTitle = stream.title
-    const icon = await thumbnailToBlob(stream.thumbnail_url, 670, 670)
+    const icon = await imgUrlToBlob(profileImg)
     const started_at = stream.started_at
 
     const createdId = await browser.notifications.create({
@@ -43,6 +43,18 @@ const getThumbnailURL = (thumbnail_url, width, height) => {
 async function thumbnailToBlob(thumbnail_url, width, height) {
     try {
         const tUrl = new URL(getThumbnailURL(thumbnail_url, width, height));
+        const response = await fetch(tUrl)
+        const blob = await response.blob()
+        const blobURL = URL.createObjectURL(blob);
+        return blobURL
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function imgUrlToBlob(imgUrl) {
+    try {
+        const tUrl = new URL(imgUrl);
         const response = await fetch(tUrl)
         const blob = await response.blob()
         const blobURL = URL.createObjectURL(blob);

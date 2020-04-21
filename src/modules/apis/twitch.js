@@ -13,7 +13,7 @@ export const fetchStreamsByUserId = (userIds) => {
         })
 }
 
-export const getStreamersInfo = (userIds) => {
+export const fetchStreamersInfo = (userIds) => {
 
     const url = new URL(`${baseUrl}/users`);
     userIds.map((userId) => url.searchParams.append('id', userId))

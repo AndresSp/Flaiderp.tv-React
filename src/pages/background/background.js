@@ -37,9 +37,10 @@ browser.runtime.onInstalled.addListener(async (details) => {
          console.log('Other install events within the browser')
          break;
    }
-
-    await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
-    await browser.alarms.create('showNotifications', { when: 1, periodInMinutes: 1 })
+   
+   await browser.alarms.create('fetchStreamersBio', { when: 0, periodInMinutes: 1 })
+   await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
+   await browser.alarms.create('showNotifications', { when: 0, periodInMinutes: 1 })
  })
 
  browser.storage.onChanged.addListener(async (changes) => {
