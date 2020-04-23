@@ -63,6 +63,7 @@
     "redux-observable": "^1.2.0",
     "redux-persist": "^6.0.0",
     "redux-persist-webextension-storage": "^1.0.2",
+    "redux-undo": "^1.0.1",
     "rxjs": "^6.5.5",
     "webext-redux": "^2.1.6"
   }
