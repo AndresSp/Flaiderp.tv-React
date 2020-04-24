@@ -14,7 +14,7 @@ const syncStorageConfig = {
   }
 
 const undoableConfig = {
-  limit: 3,
+  limit: 10,
   filter: includeAction(FETCH_STREAMS_SUCCESSFULLY)
 }
 

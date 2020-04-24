@@ -82,10 +82,25 @@ export const showNotificationsEpic = (action$, state$) => action$.pipe(
     filter(() => state$.value.notifications.pending),
     switchMap(action => {
         const state = state$.value
-        const pendingNotification = state.notifications.pending
-        const stream = Array.from(state.fetchStreams.present.data).find((stream) => stream.user_id == pendingNotification)
-        const bioImg = Array.from(state.fetchBios.data).find((bio) => bio.id == pendingNotification).profile_image_url
-        return from(createNotification(stream, bioImg))
+        const pendingUserId = state.notifications.pending
+        const stream = Array.from(state.fetchStreams.present.data).find((stream) => stream.user_id == pendingUserId)
+        let bioImg = Array.from(state.fetchBios.data).find((bio) => bio.id == pendingUserId)?.profile_image_url
+
+        if(!bioImg){
+           // TODO: default img
+        }
+
+        if(stream){
+            return from(createNotification(stream, bioImg))
+        } else {
+            const pastStreams = Array.from(state.fetchStreams.past).reverse()
+            const pastStreamSelected = pastStreams.find((past) => Array.from(past.data).find((stream) => stream.user_id == pendingUserId))
+            const pastStream = pastStreamSelected.length ? pastStreamSelected[0] : undefined 
+
+            if(pastStream){
+                return from(createNotification(pastStream, bioImg))
+            }
+        }
     }),
     mapTo(clearPendingNotification())
     

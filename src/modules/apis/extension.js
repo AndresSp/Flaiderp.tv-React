@@ -3,7 +3,7 @@ import * as browser from 'webextension-polyfill'
 export const createNotification = async (stream, profileImg) => {
     const userName = stream.user_name
     const streamTitle = stream.title
-    const icon = await imgUrlToBlob(profileImg)
+    const icon = profileImg? await imgUrlToBlob(profileImg) : './../../assets/icon/128.png'
     const started_at = stream.started_at
 
     
