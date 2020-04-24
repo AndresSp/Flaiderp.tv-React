@@ -1,8 +1,7 @@
 {
     "status": true,
     "intervals": {
-        "check": 5,
-        "notifications": 1
+        "check": 5
     },
     "streamers": {
         "main": [

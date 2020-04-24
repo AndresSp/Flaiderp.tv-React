@@ -2,7 +2,7 @@ import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH
 import { combineEpics, ofType } from "redux-observable";
 import { from, of, forkJoin } from "rxjs";
 //import { switchMap } from 'rxjs/operator/switchMap';
-import { map, catchError, switchMap, takeUntil, filter, mapTo, concatMap } from 'rxjs/operators';
+import { map, catchError, switchMap, takeUntil, filter, mapTo, concatMap, retry } from 'rxjs/operators';
 import { fetchStreamsByUserId, fetchStreamersInfo } from "../apis/twitch";
 import { createNotification } from "../apis/extension";
 import { TOGGLE_STATUS } from "../../shared/actions/config";
@@ -17,6 +17,7 @@ export const fetchBiosEpic = (action$, state$) => action$.pipe(
         takeUntil(action$.pipe(
             ofType(FETCH_STREAMERS_BIO)
             )),
+        retry(2),
         catchError(error => of(fetchStreamersBioError(error)))
         )
     )
@@ -30,6 +31,7 @@ export const fetchStreamsEpic = (action$, state$) => action$.pipe(
         takeUntil(action$.pipe(
             ofType(FETCH_STREAMS)
             )),
+        retry(2),
         catchError(error => of(fetchStreamsError(error)))
         )
     )
@@ -54,8 +56,8 @@ export const checkFetchStreamsDiffEpic = (action$, state$) => action$.pipe(
         const prevStreamers = prevStreams.map((stream) => stream.user_id).sort()
         const streamers = streams.map((stream) => stream.user_id).sort()
         
-        console.log(prevStreams, streams)
-        console.log(prevStreamers, streamers)
+        //console.log(prevStreams, streams)
+        //console.log(prevStreamers, streamers)
 
         const equal = prevStreamers.toString() === streamers.toString()
         let actions = []

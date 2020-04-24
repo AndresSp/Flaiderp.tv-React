@@ -6,16 +6,19 @@ export const createNotification = async (stream, profileImg) => {
     const icon = await imgUrlToBlob(profileImg)
     const started_at = stream.started_at
 
-    const createdId = await browser.notifications.create({
-        type:     'basic',
-        iconUrl:  icon,
-        title:    `${userName}`,
-        message:  `${streamTitle}`,
-        contextMessage: `Está en directo - ${getStreamingTime(started_at)}`,
-        priority: 0
-    })
-
-    browser.notifications.onClicked.addListener((id) => onClickNotificationHandler(id, createdId, userName));
+    
+    await browser.notifications.clear(userName)
+    
+    await browser.notifications.create(
+        userName,
+        {
+            type:     'basic',
+            iconUrl:  icon,
+            title:    `${userName}`,
+            message:  `${streamTitle}`,
+            contextMessage: `Está en directo - ${getStreamingTime(started_at)}`,
+            priority: 0
+        })
 }
 
 const getStreamingTime = (started_at) => {
@@ -64,11 +67,9 @@ async function imgUrlToBlob(imgUrl) {
     }
 }
 
-const onClickNotificationHandler = (id, createdId, userName) => {
+export const onClickNotificationHandler = (userName) => {
     const userNameUrl = userName.toLowerCase()
     window.open(`https://www.twitch.tv/${userNameUrl}`, '_blank');
-    if(id == createdId) {
-        browser.notifications.clear(id);
-        browser.notifications.onClicked.removeListener(onClickNotificationHandler);
-    }
-  }
+    browser.notifications.clear(userName);
+    //browser.notifications.onClicked.removeListener(onClickNotificationHandler);
+}
