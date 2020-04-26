@@ -86,10 +86,6 @@ export const showNotificationsEpic = (action$, state$) => action$.pipe(
         const stream = Array.from(state.fetchStreams.present.data).find((stream) => stream.user_id == pendingUserId)
         let bioImg = Array.from(state.fetchBios.data).find((bio) => bio.id == pendingUserId)?.profile_image_url
 
-        if(!bioImg){
-           // TODO: default img
-        }
-
         if(stream){
             return from(createNotification(stream, bioImg))
         } else {
