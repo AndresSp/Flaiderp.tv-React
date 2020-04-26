@@ -40,6 +40,6 @@ export const fetchStreamsReducer = (state = initialState, action) => {
     }
 }
 
-export const selectStreams = state => state.fetchStreams.data;
+export const selectStreams = state => state.fetchStreams.present.data;
 export const selectStreamsPending = state => state.pending;
 export const selectStreamsError = state => state.error;
