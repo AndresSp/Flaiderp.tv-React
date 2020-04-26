@@ -1,6 +1,6 @@
 import * as browser from 'webextension-polyfill'
 
-export const createNotification = async (stream, profileImg) => {
+export const createNotification = async (stream, profileImg, present = true) => {
     const userName = stream.user_name
     const streamTitle = stream.title
     const icon = profileImg? await imgUrlToBlob(profileImg) : './../../assets/icon/128.png'
@@ -16,7 +16,7 @@ export const createNotification = async (stream, profileImg) => {
             iconUrl:  icon,
             title:    `${userName}`,
             message:  `${streamTitle}`,
-            contextMessage: `Está en directo - ${getStreamingTime(started_at)}`,
+            contextMessage: `${present? 'Está' : 'Estuvo'} en directo - ${getStreamingTime(started_at)}`,
             priority: 0
         })
 }

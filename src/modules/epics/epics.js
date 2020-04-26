@@ -94,7 +94,7 @@ export const showNotificationsEpic = (action$, state$) => action$.pipe(
             const pastStream = pastStreamSelected.length ? pastStreamSelected[0] : undefined 
 
             if(pastStream){
-                return from(createNotification(pastStream, bioImg))
+                return from(createNotification(pastStream, bioImg, false))
             }
         }
     }),
