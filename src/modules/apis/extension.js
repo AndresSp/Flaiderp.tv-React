@@ -58,7 +58,7 @@ async function thumbnailToBlob(thumbnail_url, width, height) {
 async function imgUrlToBlob(imgUrl) {
     try {
         const tUrl = new URL(imgUrl);
-        const response = await fetch(tUrl)
+        const response = await fetch(tUrl.toString())
         const blob = await response.blob()
         const blobURL = URL.createObjectURL(blob);
         return blobURL
