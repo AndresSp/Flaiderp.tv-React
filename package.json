@@ -4,10 +4,12 @@
   "description": "-",
   "main": "background.js",
   "scripts": {
-    "test": "NODE_ENV=test jest",
     "start": "NODE_ENV=development webpack --watch --progress ",
     "build": "NODE_ENV=production webpack --progress",
-    "remotedev": "remotedev --hostname=localhost --port=9000"
+    "prepublish": "npm run build",
+    "remotedev": "remotedev --hostname=localhost --port=9000",
+    "test": "NODE_ENV=test jest",
+    "coverage": "NODE_ENV=test jest --coverage"
   },
   "repository": {
     "type": "git",

@@ -49,6 +49,7 @@ export const resetWhenEnabledEpic = (action$, state$) => action$.pipe(
 export const checkFetchStreamsDiffEpic = (action$, state$) => action$.pipe(
     ofType(CHECK_DIFF_STREAMS),
     concatMap(() => {
+        const mainStreamer = state$.value.config.streamers.main.length ? state$.value.config.streamers.main[0] : undefined
         const prevStreams = state$.value.fetchStreams.past.length ? Array.from(state$.value.fetchStreams.past)[state$.value.fetchStreams.past.length - 1].data : []
         const streams = state$.value.fetchStreams.present.data
         const notifQueue = state$.value.notifications.queue
@@ -67,7 +68,14 @@ export const checkFetchStreamsDiffEpic = (action$, state$) => action$.pipe(
 
             const streamersToAdd = diffTurnedOn.filter((streamer) => !notifQueue.includes(streamer))
 
-            Array.from(streamersToAdd).map((streamer) => actions.push( addNotificationToQueue(streamer)))
+            Array.from(streamersToAdd).map((streamer) => {
+
+                if(streamer == mainStreamer){
+                    actions.unshift(addNotificationToQueue(streamer))
+                } else {
+                    actions.push(addNotificationToQueue(streamer))
+                }
+            })
         }
 
         actions.push(showNotification())
@@ -91,10 +99,12 @@ export const showNotificationsEpic = (action$, state$) => action$.pipe(
         } else {
             const pastStreams = Array.from(state.fetchStreams.past).reverse()
             const pastStreamSelected = pastStreams.find((past) => Array.from(past.data).find((stream) => stream.user_id == pendingUserId))
-            const pastStream = pastStreamSelected.length ? pastStreamSelected[0] : undefined 
+            const pastStream = pastStreamSelected.data.length ? pastStreamSelected.data[0] : undefined 
 
-            if(pastStream){
+            if(pastStreamSelected){
                 return from(createNotification(pastStream, bioImg, false))
+            } else {
+                return of(undefined)
             }
         }
     }),

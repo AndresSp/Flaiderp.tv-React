@@ -8,7 +8,7 @@ export const createNotification = async (stream, profileImg, present = true) => 
 
     
     await browser.notifications.clear(userName)
-    
+
     await browser.notifications.create(
         userName,
         {
