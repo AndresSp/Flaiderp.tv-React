@@ -5,7 +5,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { Store } from "webext-redux";
-import App from './components/App';
+import TestContainer from './containers/TestContainer';
+import 'semantic-ui-css/semantic.min.css'
 
 const store = new Store({
   portName: 'FLAIDERPTV'
@@ -18,7 +19,7 @@ document.body.insertBefore(rootDiv, document.body.childNodes[0])
 store.ready().then(async () => {
   ReactDOM.render(
     <Provider store={store}>
-      <App/>
+      <TestContainer/>
     </Provider>
   , document.querySelector("#root"))
 })

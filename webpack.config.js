@@ -48,7 +48,6 @@ module.exports = (env, argv) =>{
             },
             {
                 test: /\.css$/,
-                exclude: /node_modules/,
                 use: [
                     { loader: 'style-loader' },
                     { 
@@ -72,8 +71,11 @@ module.exports = (env, argv) =>{
                 ]
             },
             {
-                test: /\.(png|jpe?g|gif)$/,
-                loader: 'url-loader?limit=10000&name=img/[name].[ext]'
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000
+                }
             }
         ]
     },
