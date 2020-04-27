@@ -27,3 +27,4 @@ doc/
 
 env.json
 node_modules
+coverage
