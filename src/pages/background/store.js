@@ -10,8 +10,8 @@ import rootEpics from '../../modules/epics/epics'
 import { persistStore } from 'redux-persist'
   
   const initialState = {
-    //config: configFile,
-    config: configTestFile,
+    config: configFile,
+    //config: configTestFile,
     fetchBios: {
       pending: false,
       data: [],

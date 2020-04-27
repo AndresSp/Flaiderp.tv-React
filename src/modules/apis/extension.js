@@ -71,5 +71,25 @@ export const onClickNotificationHandler = (userName) => {
     const userNameUrl = userName.toLowerCase()
     window.open(`https://www.twitch.tv/${userNameUrl}`, '_blank');
     browser.notifications.clear(userName);
-    //browser.notifications.onClicked.removeListener(onClickNotificationHandler);
+}
+
+export const setBadge = async (amount, main = false) => {
+
+    const badgeText = await browser.browserAction.getBadgeText({})
+    let newBadgeText = ''
+
+    if(main){
+        newBadgeText = `${'ON'}`
+    }
+    else if(amount > 0) {
+        newBadgeText = `${amount}`
+    } else {
+        newBadgeText = ''
+    }
+
+    if(badgeText !== newBadgeText){
+        await browser.browserAction.setBadgeText({
+            text: `${newBadgeText}`
+        })
+    }
 }

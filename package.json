@@ -4,10 +4,11 @@
   "description": "-",
   "main": "background.js",
   "scripts": {
-    "start": "NODE_ENV=development webpack --watch --progress ",
+    "start": "npm run remotedev & npm run build:dev",
+    "remotedev": "remotedev --hostname=localhost --port=9000",
+    "build:dev": "NODE_ENV=development webpack --watch --progress",
     "build": "NODE_ENV=production webpack --progress",
     "prepublish": "npm run build",
-    "remotedev": "remotedev --hostname=localhost --port=9000",
     "test": "NODE_ENV=test jest",
     "coverage": "NODE_ENV=test jest --coverage"
   },

@@ -4,9 +4,9 @@ import { from, of, forkJoin } from "rxjs";
 //import { switchMap } from 'rxjs/operator/switchMap';
 import { map, catchError, switchMap, takeUntil, filter, mapTo, concatMap, retry } from 'rxjs/operators';
 import { fetchStreamsByUserId, fetchStreamersInfo } from "../apis/twitch";
-import { createNotification } from "../apis/extension";
+import { createNotification, setBadge } from "../apis/extension";
 import { TOGGLE_STATUS } from "../../shared/actions/config";
-import { SHOW_NOTIFICATION, clearPendingNotification, showNotification, addNotificationToQueue } from "../../shared/actions/notifications";
+import { SHOW_NOTIFICATION, clearPendingNotification, showNotification, addNotificationToQueue, UPDATE_BADGE, badgeUpdated, updateBadge } from "../../shared/actions/notifications";
 import { FETCH_STREAMERS_BIO, fetchStreamersBioSuccessfully, fetchStreamersBioError } from "../../shared/actions/fetchStreamersBio";
 
 
@@ -27,7 +27,7 @@ export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     ofType(FETCH_STREAMS),
     filter(() => state$.value.config.status),
     switchMap(action => from(fetchStreamsByUserId(action.streamers)).pipe(
-        map(response => fetchStreamsSuccessfully(response)),
+        concatMap(response => [fetchStreamsSuccessfully(response), updateBadge()]),
         takeUntil(action$.pipe(
             ofType(FETCH_STREAMS)
             )),
@@ -41,7 +41,7 @@ export const resetWhenEnabledEpic = (action$, state$) => action$.pipe(
     ofType(TOGGLE_STATUS),
     filter(() => state$.value.config.status),
     mapTo(fetchStreams([
-        state$.value.config.streamers.main, 
+        ...state$.value.config.streamers.main, 
         ...state$.value.config.streamers.enabled
     ]))
 )
@@ -56,9 +56,6 @@ export const checkFetchStreamsDiffEpic = (action$, state$) => action$.pipe(
 
         const prevStreamers = prevStreams.map((stream) => stream.user_id).sort()
         const streamers = streams.map((stream) => stream.user_id).sort()
-        
-        //console.log(prevStreams, streams)
-        //console.log(prevStreamers, streamers)
 
         const equal = prevStreamers.toString() === streamers.toString()
         let actions = []
@@ -69,8 +66,7 @@ export const checkFetchStreamsDiffEpic = (action$, state$) => action$.pipe(
             const streamersToAdd = diffTurnedOn.filter((streamer) => !notifQueue.includes(streamer))
 
             Array.from(streamersToAdd).map((streamer) => {
-
-                if(streamer == mainStreamer){
+                if(mainStreamer && streamer == mainStreamer){
                     actions.unshift(addNotificationToQueue(streamer))
                 } else {
                     actions.push(addNotificationToQueue(streamer))
@@ -112,11 +108,25 @@ export const showNotificationsEpic = (action$, state$) => action$.pipe(
     
 )
 
+export const updateBadgeEpic = (action$, state$) => action$.pipe(
+    ofType(UPDATE_BADGE),
+    switchMap(async action$ => {
+        const state = state$.value
+        const mainStreamer = state.config.streamers.main.length ? state$.value.config.streamers.main[0] : undefined
+        const streams = Array.from(state.fetchStreams.present.data)
+        const mainStream = streams.find(stream => stream.user_id == mainStreamer)
+
+        await setBadge(streams.length, mainStream)
+        return badgeUpdated()
+    }),
+)
+
 export default combineEpics(
     fetchBiosEpic,
     fetchStreamsEpic,
     checkFetchStreamsDiffEpic,
     showNotificationsEpic,
-    resetWhenEnabledEpic
+    resetWhenEnabledEpic,
+    updateBadgeEpic
     //clearWhenDisabledEpic
 );

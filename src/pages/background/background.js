@@ -6,7 +6,7 @@ import store from './store'
 import configFile from "../../assets/config/config.json"
 import { fetchStreams, checkDiffStreams, FETCH_STREAMS_CLEARED } from "../../shared/actions/fetchStreams";
 import { fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
-import { addNotificationToQueue, showNotification } from '../../shared/actions/notifications';
+import { addNotificationToQueue, showNotification, updateBadge } from '../../shared/actions/notifications';
 import { onClickNotificationHandler } from '../../modules/apis/extension'
 
 
@@ -61,6 +61,7 @@ browser.runtime.onInstalled.addListener(async (details) => {
 
          case 'fetchStreams':
             await onFetchStreams([...mainStreamer, ...enabledStreamers])
+            //await onUpdateBadge() //update badge
             await onCheckStreams() //check, add to queue and show notifications
              break;
 
