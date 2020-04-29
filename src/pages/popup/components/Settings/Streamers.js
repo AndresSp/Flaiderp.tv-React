@@ -1,7 +1,7 @@
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
-import { DndItemTypes, DndContainerTypes } from '../../../shared/DnDTypes';
-import { disableStreamer } from '../../../shared/actions/config';
+import { DndItemTypes, DndContainerTypes } from '../../../../shared/DnDTypes';
+import { disableStreamer } from '../../../../shared/actions/config';
 
 const Streamers = ({children, configKey, title}) => {
     

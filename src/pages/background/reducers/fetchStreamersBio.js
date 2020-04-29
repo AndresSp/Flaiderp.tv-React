@@ -32,3 +32,7 @@ export const fetchStreamersBiosReducer = (state = initialState, action) => {
             return state
     }
 }
+
+export const selectStreamsBio = state => state.fetchBios.data;
+export const selectStreamsBioPending = state => state.pending;
+export const selectStreamsBioError = state => state.error;
