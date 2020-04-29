@@ -23,6 +23,7 @@ module.exports = (env, argv) =>{
     return  {
     mode,
     entry: {
+        'configure-webpack': './configure-webpack.js',
         'babel-polyfill': 'babel-polyfill',
         'background': `${PAGES_PATH}/background/background.js`,
         'popup': `${PAGES_PATH}/popup/popup.js`,
@@ -32,7 +33,6 @@ module.exports = (env, argv) =>{
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
         chunkFilename: '[name]',
-        publicPath: '.',
         libraryTarget: "umd"
     },
     devtool: 'inline-source-map',
@@ -52,12 +52,12 @@ module.exports = (env, argv) =>{
                     { loader: 'style-loader' },
                     { 
                         loader: 'css-loader',
-                        options: {
-                            modules: {
-                                localIdentName: "[name]__[local]___[hash:base64:5]",
-                            },														
-                            sourceMap: true
-                        }
+                        // options: {
+                        //     modules: {
+                        //         localIdentName: "[name]__[local]___[hash:base64:5]",
+                        //     },														
+                        //     sourceMap: true
+                        // }
                      },
                      { 
                          loader: 'postcss-loader',
