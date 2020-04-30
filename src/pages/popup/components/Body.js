@@ -8,9 +8,19 @@ const styles = {
     }
 }
 
-const Body = (props) => (
+const carouselFeed = (streams, streamersBio) => {
+    const streamsWithBio = streams.map((stream) => ({
+        ...findBio(stream.user_id, streamersBio),
+        ...stream
+    }))
+        return [...streamsWithBio]
+    }
+
+const findBio = (userId, streamersBio) => streamersBio.find((streamer) => streamer.id == userId)
+
+const Body = ({ streams, streamersBio }) => (
     <Container style={styles.container}>
-        <Carousel { ...props } />
+        <Carousel streamsFeed= { carouselFeed(streams, streamersBio) } />
     </Container>
 )
 

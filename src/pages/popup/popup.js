@@ -15,6 +15,7 @@ const store = new Store({
 
 const rootDiv = document.createElement('div')
 rootDiv.id = 'root'
+//rootDiv.style.height = '100%'
 // rootDiv.style.minHeight = '300px'
 document.body.insertBefore(rootDiv, document.body.childNodes[0])
 
