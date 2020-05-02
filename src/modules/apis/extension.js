@@ -37,12 +37,6 @@ const getStreamingTime = (started_at) => {
     return `${hh > 0 ? `${hh} h` : ''} ${mm > 0 ? `${mm} m` : ''} ${ss > 0 ? `${ss} s` : ''}`
 }
 
-const getThumbnailURL = (thumbnail_url, width, height) => {
-    return thumbnail_url
-    .replace('{width}', `${width}`)
-    .replace('{height}', `${height}`)
-}
-
 async function thumbnailToBlob(thumbnail_url, width, height) {
     try {
         const tUrl = new URL(getThumbnailURL(thumbnail_url, width, height));

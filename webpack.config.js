@@ -23,6 +23,7 @@ module.exports = (env, argv) =>{
     return  {
     mode,
     entry: {
+        'configure-webpack': './configure-webpack.js',
         'babel-polyfill': 'babel-polyfill',
         'background': `${PAGES_PATH}/background/background.js`,
         'popup': `${PAGES_PATH}/popup/popup.js`,
@@ -32,7 +33,6 @@ module.exports = (env, argv) =>{
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].js',
         chunkFilename: '[name]',
-        publicPath: '.',
         libraryTarget: "umd"
     },
     devtool: 'inline-source-map',
@@ -48,17 +48,16 @@ module.exports = (env, argv) =>{
             },
             {
                 test: /\.css$/,
-                exclude: /node_modules/,
                 use: [
                     { loader: 'style-loader' },
                     { 
                         loader: 'css-loader',
-                        options: {
-                            modules: {
-                                localIdentName: "[name]__[local]___[hash:base64:5]",
-                            },														
-                            sourceMap: true
-                        }
+                        // options: {
+                        //     modules: {
+                        //         localIdentName: "[name]__[local]___[hash:base64:5]",
+                        //     },														
+                        //     sourceMap: true
+                        // }
                      },
                      { 
                          loader: 'postcss-loader',
@@ -72,8 +71,11 @@ module.exports = (env, argv) =>{
                 ]
             },
             {
-                test: /\.(png|jpe?g|gif)$/,
-                loader: 'url-loader?limit=10000&name=img/[name].[ext]'
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000
+                }
             }
         ]
     },

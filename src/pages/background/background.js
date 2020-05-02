@@ -9,7 +9,6 @@ import { fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
 import { addNotificationToQueue, showNotification, updateBadge } from '../../shared/actions/notifications';
 import { onClickNotificationHandler } from '../../modules/apis/extension'
 
-
 browser.runtime.onUpdateAvailable.addListener(async (details) => {
    //TODO: create notification "Available Update"
 })

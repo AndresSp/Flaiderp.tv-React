@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.8.3",
+    "pure-react-carousel": "^1.27.1",
     "react": "^16.13.0",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.0",
@@ -73,6 +74,8 @@
     "redux-persist-webextension-storage": "^1.0.2",
     "redux-undo": "^1.0.1",
     "rxjs": "^6.5.5",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
     "webext-redux": "^2.1.6"
   }
 }
