@@ -1,4 +1,6 @@
 {
+    "access_token": null,
+    "refresh_token": null,
     "status": true,
     "intervals": {
         "check": 1
