@@ -29,7 +29,7 @@ const getThumbnailURL = (thumbnail_url, width, height) => {
     .replace('{height}', `${height}`)
 }
 
-const Carousel = ({ streamsFeed }) => (
+const Carousel = ({ streamsFeed, main }) => (
     <CarouselProvider
     naturalSlideWidth={1}
     naturalSlideHeight={1.04}
@@ -39,13 +39,13 @@ const Carousel = ({ streamsFeed }) => (
     hasMasterSpinner={true}>
         <Slider>
             {
-                Array.from(streamsFeed).map(({user_id, thumbnail_url, display_name, description}, idx) => (
+                Array.from(streamsFeed).map(({online, id, thumbnail_url, profile_image_url, display_name, title, description}, idx) => (
                     <StreamSlide 
-                    key={user_id} 
+                    key={id} 
                     index={idx}
-                    image={getThumbnailURL(thumbnail_url, 698, 393)}
+                    image={ online ? getThumbnailURL(thumbnail_url, 698, 393) : profile_image_url }
                     header={display_name}
-                    description={description}
+                    description={ online ? title : description }
                 />
                 ))
             }

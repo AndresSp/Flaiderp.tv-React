@@ -8,19 +8,36 @@ const styles = {
     }
 }
 
-const carouselFeed = (streams, streamersBio) => {
-    const streamsWithBio = streams.map((stream) => ({
-        ...findBio(stream.user_id, streamersBio),
-        ...stream
-    }))
-        return [...streamsWithBio]
+const carouselFeed = (streamersBio, streams, main) => {
+    const bioWithStreamsON = Array.from(streamersBio).map((bio) => {
+        const streamOn = findStreamON(bio.id, streams)
+        return {
+            ...bio,
+            ...streamOn,
+            ...streamOn ? { online: true } : { online: false }
+        }
+    })
+
+    bioWithStreamsON.sort((a, b) => b.online - a.online)
+
+    if(main && main.length && main[0]){
+        const idxFound = bioWithStreamsON.findIndex((el) => el.online && el.user_id == main[0])
+        if(idxFound > -1){
+            const mainStream = bioWithStreamsON.splice(idxFound, 1)[0]
+            bioWithStreamsON.unshift(mainStream)
+        }
+
     }
 
-const findBio = (userId, streamersBio) => streamersBio.find((streamer) => streamer.id == userId)
+        console.log(bioWithStreamsON)
+        return [...bioWithStreamsON]
+    }
 
-const Body = ({ streams, streamersBio }) => (
+const findStreamON = (id, streams) => streams.find((stream) => stream.user_id == id)
+
+const Body = ({ streamersBio, streams, mainStreamer }) => (
     <Container style={styles.container}>
-        <Carousel streamsFeed= { carouselFeed(streams, streamersBio) } />
+        <Carousel streamsFeed={ carouselFeed(streamersBio, streams, mainStreamer) } />
     </Container>
 )
 

@@ -25,7 +25,7 @@ const mapStateToProps = state => ({
     config: state.config,
     status: selectStatus(state),
     streamers: selectStreamers(state),
-    // mainStreamer: selectMainStreamer(state),
+    mainStreamer: selectMainStreamer(state),
     // enabledStreamers: selectEnabledStreamers(state),
     // disabledStreamers: selectDisabledStreamers(state),
     streams: selectStreams(state),

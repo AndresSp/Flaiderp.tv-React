@@ -10,8 +10,8 @@ const StreamSlide = ({ index, image, header, description }) => {
         <Slide index={index}>
             <div style={{ padding: 5 }}>
                 <Card fluid>
-                    <Image hasMasterSpinner={true} src={image}/>
-                    <Card.Content>
+                    <Image hasMasterSpinner={true} src={image} className='carousel-image'/>
+                    <Card.Content className='carousel-content'>
                         <Card.Header>{ header }</Card.Header>
                         <Card.Description>{ description }</Card.Description>
                     </Card.Content>
