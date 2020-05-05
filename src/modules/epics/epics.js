@@ -2,12 +2,12 @@ import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH
 import { combineEpics, ofType } from "redux-observable";
 import { from, of } from "rxjs";
 import { map, catchError, switchMap, takeUntil, filter, mapTo, concatMap, retry } from 'rxjs/operators';
-import { fetchStreamsByUserId, fetchStreamersInfo } from "../apis/twitch";
+import { fetchStreamsByUserId, fetchStreamersInfo, validateToken } from "../apis/twitch";
 import { createNotification, setBadge, authExtension } from "../apis/extension";
 import { TOGGLE_STATUS } from "../../shared/actions/config";
 import { SHOW_NOTIFICATION, clearPendingNotification, showNotification, addNotificationToQueue, UPDATE_BADGE, badgeUpdated, updateBadge } from "../../shared/actions/notifications";
 import { FETCH_STREAMERS_BIO, fetchStreamersBioSuccessfully, fetchStreamersBioError, fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
-import { AUTH, authSuccessfully, authError, auth, clearToken, CLEAR_TOKEN } from "../../shared/actions/auth";
+import { AUTH, authSuccessfully, authError, auth, clearToken, CLEAR_TOKEN, VALIDATE_TOKEN } from "../../shared/actions/auth";
 
 export const authEpic = (action$, state$) => action$.pipe(
     ofType(AUTH),
@@ -30,6 +30,15 @@ export const unauthorizedEpic = (action$, state$) => action$.pipe(
     ofType(FETCH_STREAMS_UNAUTHORIZED_ERROR),
     mapTo(clearToken())
     //concatMap(response => [clearToken(), auth()])
+)
+
+export const validateTokenEpic = (action$, state$) => action$.pipe(
+    ofType(VALIDATE_TOKEN),
+    filter(() => state$.value.auth.accessToken),
+    switchMap(action => from(validateToken(state$.value.auth.accessToken)).pipe(
+        catchError(error => clearToken())
+    )
+    )
 )
 
 export const fetchBiosEpic = (action$, state$) => action$.pipe(

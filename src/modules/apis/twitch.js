@@ -25,3 +25,13 @@ export const fetchStreamersInfo = (userIds, accessToken) => {
         'Authorization': `Bearer ${accessToken}`
     })
 }
+
+export const validateToken = (accessToken) => {
+
+    const url = new URL(`https://id.twitch.tv/oauth2/validate`);
+    
+    return  ajax.getJSON(url.toString(), {
+        'Content-Type': 'application/json',
+        'Authorization': `OAuth ${accessToken}`
+    })
+}

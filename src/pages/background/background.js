@@ -3,12 +3,12 @@
 import "babel-polyfill";
 import * as browser from 'webextension-polyfill'
 import store from './store'
-import configFile from "../../assets/config/config.json"
 import { fetchStreams, checkDiffStreams, FETCH_STREAMS_CLEARED } from "../../shared/actions/fetchStreams";
 import { fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
 import { addNotificationToQueue, showNotification, updateBadge } from '../../shared/actions/notifications';
 import { onClickNotificationHandler } from '../../modules/apis/extension'
 import { CLIENT_ID } from './../../env.json';
+import { auth, validateToken } from "../../shared/actions/auth";
 
 browser.runtime.onUpdateAvailable.addListener(async (details) => {
    //TODO: create notification "Available Update"
@@ -34,7 +34,8 @@ browser.runtime.onInstalled.addListener(async (details) => {
          console.log('Other install events within the browser')
          break;
    }
-   await browser.alarms.create('validateTokens', { when: 0, periodInMinutes: 30 })
+   await browser.alarms.create('authAgain', { delayInMinutes: 1440, periodInMinutes: 1440 }) //each day
+   await browser.alarms.create('validateToken', { when: 0, periodInMinutes: 30 })
    await browser.alarms.create('fetchStreamersBio', { when: 0, periodInMinutes: 60 })
    await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
  })
@@ -49,12 +50,21 @@ browser.runtime.onInstalled.addListener(async (details) => {
  browser.alarms.onAlarm.addListener(async ({ name }) => {
    const state = store.getState()
 
+   const accessToken = state.auth.accessToken
    const status = state.config.status
    const mainStreamer = state.config.streamers.main
    const enabledStreamers = state.config.streamers.enabled
    const disabledStreamers = state.config.streamers.disabled
 
      switch (name) {
+        case 'authAgain':
+           await onAuthAgain(accessToken)
+           break;
+
+         case 'validateToken':
+            await onValidateTokens()
+            break;
+
          case 'fetchStreamersBio':
             await onFetchStreamersBio([...mainStreamer, ...enabledStreamers, ...disabledStreamers])
             break;
@@ -69,6 +79,16 @@ browser.runtime.onInstalled.addListener(async (details) => {
              break;
      }
  })
+
+ const onAuthAgain = async (accessToken) => {
+    if(accessToken){
+      await store.dispatch(auth())
+    }
+ }
+
+ const onValidateTokens = async () => {
+    await store.dispatch(validateToken())
+ }
 
  const onFetchStreamersBio = async (streamers) => {
    await store.dispatch(fetchStreamersBio(streamers))

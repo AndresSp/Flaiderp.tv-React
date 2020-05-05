@@ -14,7 +14,6 @@ export const authExtension = async () => {
     if (matches && matches.length > 1){
         const values = parseRedirectFragment(matches[1])
         if (values.hasOwnProperty('access_token')){
-            console.log(values.access_token)
             return values.access_token
         }
     }
