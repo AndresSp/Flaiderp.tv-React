@@ -41,4 +41,6 @@ export const authReducer = (state = initialState, action) => {
     }
 }
 
+
+export const selectAuthPending = state => state.auth.pending;
 export const selectAccessToken = state => state.auth.accessToken;

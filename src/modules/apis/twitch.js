@@ -14,13 +14,14 @@ export const fetchStreamsByUserId = (userIds, accessToken) => {
         })
 }
 
-export const fetchStreamersInfo = (userIds) => {
+export const fetchStreamersInfo = (userIds, accessToken) => {
 
     const url = new URL(`${baseUrl}/users`);
     userIds.map((userId) => url.searchParams.append('id', userId))
     
     return  ajax.getJSON(url.toString(), {
         'Content-Type': 'application/json',
-        'Client-ID': CLIENT_ID
+        'Client-ID': CLIENT_ID,
+        'Authorization': `Bearer ${accessToken}`
     })
 }

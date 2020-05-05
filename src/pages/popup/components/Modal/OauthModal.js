@@ -6,10 +6,10 @@ class OauthModal extends React.PureComponent {
   constructor(props) {
     super(props)
 
-    const { open } = this.props
+    const { hasAccessToken } = this.props
 
     this.state = {
-      open: open,
+      open: !hasAccessToken,
       cancelled: false
     }
   }
@@ -29,10 +29,11 @@ class OauthModal extends React.PureComponent {
   }
 
   render() {
+    const { hasAccessToken, pending, onAuth } = this.props
     return (
       <Fragment>
         <CancelledModal open={ this.state.cancelled } onReturn={ this.open }></CancelledModal>
-        <Modal open={ this.state.open } basic size='small'>
+        <Modal open={ this.state.open && !hasAccessToken } basic size='small'>
           <Header icon='twitch' color='violet' inverted content='No Autorizado' />
           <Modal.Content>
             <p style={{textAlign:'justify'}}>
@@ -40,10 +41,10 @@ class OauthModal extends React.PureComponent {
             </p>
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={() => this.close()} basic color='grey' inverted>
+            <Button onClick={() => this.close()} disabled={ pending } basic color='grey' inverted>
               <Icon name='remove' /> Cancelar
             </Button>
-            <Button onClick={() => this.props.onAuth() } color='violet' inverted>
+            <Button onClick={() => onAuth() } loading={ pending } disabled={ pending } color='violet' inverted>
               <Icon name='checkmark' /> Autorizar
             </Button>
           </Modal.Actions>

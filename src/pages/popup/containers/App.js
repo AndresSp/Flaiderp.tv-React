@@ -5,7 +5,7 @@ import Body from '../components/Body'
 import { selectStatus, selectStreamers, selectMainStreamer, selectEnabledStreamers, selectDisabledStreamers } from '../../background/reducers/config'
 import { selectStreams } from '../../background/reducers/fetchStreams'
 import { selectStreamsBio } from '../../background/reducers/fetchStreamersBio'
-import { selectAccessToken } from '../../background/reducers/auth'
+import { selectAccessToken, selectAuthPending } from '../../background/reducers/auth'
 import { auth } from '../../../shared/actions/auth'
 
 
@@ -25,6 +25,7 @@ class App extends React.PureComponent {
 
 const mapStateToProps = state => ({
     config: state.config,
+    authPending: selectAuthPending(state),
     accessToken: selectAccessToken(state),
     status: selectStatus(state),
     streamers: selectStreamers(state),
