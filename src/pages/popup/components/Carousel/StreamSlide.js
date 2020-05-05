@@ -1,19 +1,26 @@
 import React from 'react';
 import { Slide, Image } from 'pure-react-carousel';
-import { Card, Icon } from 'semantic-ui-react';
+import { Card, Icon, Placeholder } from 'semantic-ui-react';
 
 const styles = {}
 
 const StreamSlide = ({ index, image, header, description }) => {
 
+    const imgPlaceHolder = () => (
+    <Placeholder>
+        <Placeholder.Image className='carousel-image-placeholder' />
+    </Placeholder>)
+
     return (
         <Slide index={index}>
             <div style={{ padding: 5 }}>
                 <Card fluid>
-                    <Image hasMasterSpinner={true} src={image} className='carousel-image'/>
+                    <Image hasMasterSpinner={false} isBgImage={true} tag='div' renderLoading={imgPlaceHolder} src={image} className='carousel-image'/>
                     <Card.Content className='carousel-content'>
                         <Card.Header>{ header }</Card.Header>
-                        <Card.Description>{ description }</Card.Description>
+                        <Card.Description className='carousel-description'>
+                            { description }
+                            </Card.Description>
                     </Card.Content>
                 </Card>
             </div>

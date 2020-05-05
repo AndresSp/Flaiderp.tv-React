@@ -9,10 +9,16 @@ import { fetchStreamersBiosReducer } from './fetchStreamersBio'
 import { FETCH_STREAMS_SUCCESSFULLY } from '../../../shared/actions/fetchStreams'
 import { authReducer } from './auth'
 
-const syncStorageConfig = {
-    key: 'config',
-    storage: syncStorage
-  }
+const syncStorageConfigToConfigReducer = {
+  key: 'config',
+  storage: syncStorage
+}
+
+const syncStorageConfigToAuthReducer = {
+  key: 'auth',
+  storage: syncStorage,
+  whitelist: ['accessToken']
+}
 
 const undoableConfig = {
   limit: 10,
@@ -21,8 +27,8 @@ const undoableConfig = {
 
 
 export default combineReducers({
-    config: persistReducer(syncStorageConfig, configReducer),
-    auth: authReducer,
+    config: persistReducer(syncStorageConfigToConfigReducer, configReducer),
+    auth: persistReducer(syncStorageConfigToAuthReducer, authReducer),
     fetchBios: fetchStreamersBiosReducer,
     fetchStreams: undoable(fetchStreamsReducer, undoableConfig),
     notifications: notificationsReducer

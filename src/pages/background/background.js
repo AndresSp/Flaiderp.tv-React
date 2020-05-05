@@ -52,6 +52,7 @@ browser.runtime.onInstalled.addListener(async (details) => {
 
    const accessToken = state.auth.accessToken
    const status = state.config.status
+   const bios = state.fetchBios.data
    const mainStreamer = state.config.streamers.main
    const enabledStreamers = state.config.streamers.enabled
    const disabledStreamers = state.config.streamers.disabled
@@ -70,6 +71,9 @@ browser.runtime.onInstalled.addListener(async (details) => {
             break;
 
          case 'fetchStreams':
+            if(Array.from(bios).length == 0){
+               await onFetchStreamersBio([...mainStreamer, ...enabledStreamers, ...disabledStreamers])
+            }
             await onFetchStreams([...mainStreamer, ...enabledStreamers])
             //await onUpdateBadge() //update badge
             await onCheckStreams() //check, add to queue and show notifications

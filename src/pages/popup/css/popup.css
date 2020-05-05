@@ -4,19 +4,23 @@ body, html {
 
 
 .carousel-image {
-    max-height: 159px; 
-    object-fit: cover;
-    object-position: 0 22%;
+    background-position:0 22%;
+	background-repeat:no-repeat;
+    background-size:cover;
+    height: 159px;
+    /* object-fit: cover;
+    object-position: 0 22%; */
 }
 
-/* .carousel-content {
-    height: 113px;
-} */
+.carousel-image-placeholder {
+    height: 159px !important; 
+}
 
-/* styles for '...' */ 
 .carousel-content {
-    height: 113px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;  
+    min-height: 113px;
   }
+
+.carousel-description {
+    overflow: auto;
+    height: 60px
+}
