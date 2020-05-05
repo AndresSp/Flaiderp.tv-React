@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
 import Carousel from './Carousel/Carousel';
+import OauthModal from './Modal/OauthModal';
 
 const styles = {
     container: {
@@ -35,8 +36,9 @@ const carouselFeed = (streamersBio, streams, main) => {
 
 const findStreamON = (id, streams) => streams.find((stream) => stream.user_id == id)
 
-const Body = ({ streamersBio, streams, mainStreamer }) => (
+const Body = ({ streamersBio, streams, mainStreamer, accessToken }) => (
     <Container style={styles.container}>
+        <OauthModal open={ !accessToken }/>
         <Carousel streamsFeed={ carouselFeed(streamersBio, streams, mainStreamer) } />
     </Container>
 )

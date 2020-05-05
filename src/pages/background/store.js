@@ -12,6 +12,11 @@ import { persistStore } from 'redux-persist'
   const initialState = {
     //config: configFile,
     config: configTestFile,
+    auth: {
+      pending: false,
+      accessToken: undefined,
+      error: null
+    },
     fetchBios: {
       pending: false,
       data: [],

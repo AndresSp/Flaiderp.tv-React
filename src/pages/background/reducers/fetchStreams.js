@@ -19,7 +19,8 @@ export const fetchStreamsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pending: false,
-                data: action.payload.data
+                data: action.payload.data,
+                error: null
             }
         
         case FETCH_STREAMS_ERROR:

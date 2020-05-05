@@ -8,6 +8,7 @@ import { fetchStreams, checkDiffStreams, FETCH_STREAMS_CLEARED } from "../../sha
 import { fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
 import { addNotificationToQueue, showNotification, updateBadge } from '../../shared/actions/notifications';
 import { onClickNotificationHandler } from '../../modules/apis/extension'
+import { CLIENT_ID } from './../../env.json';
 
 browser.runtime.onUpdateAvailable.addListener(async (details) => {
    //TODO: create notification "Available Update"
@@ -33,7 +34,7 @@ browser.runtime.onInstalled.addListener(async (details) => {
          console.log('Other install events within the browser')
          break;
    }
-
+   await browser.alarms.create('validateTokens', { when: 0, periodInMinutes: 30 })
    await browser.alarms.create('fetchStreamersBio', { when: 0, periodInMinutes: 60 })
    await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
  })

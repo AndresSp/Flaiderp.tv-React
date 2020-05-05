@@ -1,4 +1,38 @@
 import * as browser from 'webextension-polyfill'
+import { CLIENT_ID } from "../../env.json";
+
+export const auth = async () => {
+    const client_id = CLIENT_ID;
+    const redirectUri = browser.identity.getRedirectURL('auth'); 
+
+    const auth_url = "https://id.twitch.tv/oauth2/authorize?client_id=" + client_id + "&redirect_uri=" + redirectUri + "&response_type=token";
+
+    const redirectUrl = await browser.identity.launchWebAuthFlow({'url': auth_url, 'interactive': true});
+
+    const redirectRe = new RegExp(redirectUri + '[#\?](.*)');
+    const matches = redirectUrl.match(redirectRe);
+    if (matches && matches.length > 1){
+        const values = parseRedirectFragment(matches[1])
+        if (values.hasOwnProperty('access_token')){
+            console.log(values.access_token)
+            return values.access_token
+        }
+    }
+
+    return null
+}
+
+function parseRedirectFragment(fragment) {
+    var pairs = fragment.split(/&/);
+    var values = {};
+
+    pairs.forEach(function(pair) {
+      var nameval = pair.split(/=/);
+      values[nameval[0]] = nameval[1];
+    });
+
+    return values;
+  }
 
 export const createNotification = async (stream, profileImg, present = true) => {
     const userName = stream.user_name
@@ -86,4 +120,8 @@ export const setBadge = async (amount, main = false) => {
             text: `${newBadgeText}`
         })
     }
+}
+
+export const uninstall = async () => {
+    return await browser.management.uninstallSelf({ showConfirmDialog: true })
 }

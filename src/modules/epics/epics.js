@@ -26,7 +26,8 @@ export const fetchBiosEpic = (action$, state$) => action$.pipe(
 export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     ofType(FETCH_STREAMS),
     filter(() => state$.value.config.status),
-    switchMap(action => from(fetchStreamsByUserId(action.streamers)).pipe(
+    switchMap(action => {
+        return from(fetchStreamsByUserId(action.streamers, state$.value.access_token)).pipe(
         concatMap(response => [fetchStreamsSuccessfully(response), updateBadge()]),
         takeUntil(action$.pipe(
             ofType(FETCH_STREAMS)
@@ -34,6 +35,7 @@ export const fetchStreamsEpic = (action$, state$) => action$.pipe(
         retry(2),
         catchError(error => of(fetchStreamsError(error)))
         )
+    }
     )
 )
 

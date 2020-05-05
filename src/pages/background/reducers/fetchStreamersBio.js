@@ -18,7 +18,8 @@ export const fetchStreamersBiosReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pending: false,
-                data: action.payload.data
+                data: action.payload.data,
+                error: null
             }
         
         case FETCH_STREAMERS_BIO_ERROR:
