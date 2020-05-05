@@ -1,4 +1,4 @@
-import { AUTH, AUTH_SUCCESSFULLY, AUTH_ERROR, AUTH_UNAUTHORIZED } from "../../../shared/actions/auth"
+import { AUTH, AUTH_SUCCESSFULLY, AUTH_ERROR, CLEAR_TOKEN } from "../../../shared/actions/auth"
 
 const initialState = {
     pending: false,
@@ -21,19 +21,18 @@ export const authReducer = (state = initialState, action) => {
                 accessToken: action.accessToken,
                 error: null
             }
-
-        case AUTH_UNAUTHORIZED:
-            return {
-                ...state,
-                pending: false,
-                error: action.error
-            }
         
         case AUTH_ERROR:
             return {
                 ...state,
                 pending: false,
                 error: action.error
+            }
+
+        case CLEAR_TOKEN:
+            return {
+                ...state,
+                accessToken: undefined
             }
 
         default:

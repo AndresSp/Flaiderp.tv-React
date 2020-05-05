@@ -36,15 +36,15 @@ class OauthModal extends React.PureComponent {
         <Modal open={ this.state.open && !hasAccessToken } basic size='small'>
           <Header icon='twitch' color='violet' inverted content='No Autorizado' />
           <Modal.Content>
-            <p style={{textAlign:'justify'}}>
+            <p style={{ textAlign:'justify' }}>
               Flaiderp.tv debe ser autorizado para obtener la información y estado de tus streamers favoritos.
             </p>
           </Modal.Content>
           <Modal.Actions>
-            <Button onClick={() => this.close()} disabled={ pending } basic color='grey' inverted>
+            <Button onClick={ () => this.close() } disabled={ pending } basic color='grey' inverted>
               <Icon name='remove' /> Cancelar
             </Button>
-            <Button onClick={() => onAuth() } loading={ pending } disabled={ pending } color='violet' inverted>
+            <Button onClick={ () => onAuth() } loading={ pending } disabled={ pending } color='violet' inverted>
               <Icon name='checkmark' /> Autorizar
             </Button>
           </Modal.Actions>
