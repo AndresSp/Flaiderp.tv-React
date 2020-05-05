@@ -1,7 +1,7 @@
 import * as browser from 'webextension-polyfill'
 import { CLIENT_ID } from "../../env.json";
 
-export const auth = async () => {
+export const authExtension = async () => {
     const client_id = CLIENT_ID;
     const redirectUri = browser.identity.getRedirectURL('auth'); 
 

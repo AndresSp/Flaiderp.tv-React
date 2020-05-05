@@ -36,9 +36,9 @@ const carouselFeed = (streamersBio, streams, main) => {
 
 const findStreamON = (id, streams) => streams.find((stream) => stream.user_id == id)
 
-const Body = ({ streamersBio, streams, mainStreamer, accessToken }) => (
+const Body = ({ streamersBio, streams, mainStreamer, accessToken, onAuthorize }) => (
     <Container style={styles.container}>
-        <OauthModal open={ !accessToken }/>
+        <OauthModal open={ !accessToken } onAuth={ onAuthorize }/>
         <Carousel streamsFeed={ carouselFeed(streamersBio, streams, mainStreamer) } />
     </Container>
 )

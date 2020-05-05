@@ -5,8 +5,11 @@ import CancelledModal from './CancelledModal'
 class OauthModal extends React.PureComponent {
   constructor(props) {
     super(props)
+
+    const { open } = this.props
+
     this.state = {
-      open: this.props.open,
+      open: open,
       cancelled: false
     }
   }
@@ -40,7 +43,7 @@ class OauthModal extends React.PureComponent {
             <Button onClick={() => this.close()} basic color='grey' inverted>
               <Icon name='remove' /> Cancelar
             </Button>
-            <Button color='violet' inverted>
+            <Button onClick={() => this.props.onAuth() } color='violet' inverted>
               <Icon name='checkmark' /> Autorizar
             </Button>
           </Modal.Actions>

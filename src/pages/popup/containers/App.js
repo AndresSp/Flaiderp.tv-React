@@ -6,6 +6,7 @@ import { selectStatus, selectStreamers, selectMainStreamer, selectEnabledStreame
 import { selectStreams } from '../../background/reducers/fetchStreams'
 import { selectStreamsBio } from '../../background/reducers/fetchStreamersBio'
 import { selectAccessToken } from '../../background/reducers/auth'
+import { auth } from '../../../shared/actions/auth'
 
 
 class App extends React.PureComponent {
@@ -34,4 +35,8 @@ const mapStateToProps = state => ({
     streamersBio: selectStreamsBio(state)
 })
 
-export default connect(mapStateToProps, null)(App)
+const mapDispatchToProps = dispatch => ({
+    onAuthorize: () => dispatch(auth())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
