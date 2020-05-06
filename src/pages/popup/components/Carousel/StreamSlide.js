@@ -40,7 +40,13 @@ const StreamSlide = ({ index, showLive, imageOnError, image, header, description
                     </Card.Content>
                     <Card.Content extra>
                         <a>
-                            <Icon circular link name='twitch' />
+                            <Icon circular link name='twitch' color='purple' />
+                        </a>
+                        <a>
+                            <Icon circular link name='youtube' color='red' />
+                        </a>
+                        <a>
+                            <Icon circular link name='discord' />
                         </a>
                     </Card.Content>
                 </Card>
