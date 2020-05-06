@@ -60,7 +60,7 @@ export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     filter(() => state$.value.config.status),
     filter(() => state$.value.auth.accessToken),
     switchMap(action => {
-        return from(fetchStreamsByUserId(action.streamers, state$.value.access_token)).pipe(
+        return from(fetchStreamsByUserId(action.streamers, state$.value.auth.accessToken)).pipe(
         concatMap(response => [fetchStreamsSuccessfully(response), updateBadge()]),
         takeUntil(action$.pipe(
             ofType(FETCH_STREAMS)
