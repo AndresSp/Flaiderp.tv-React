@@ -15,7 +15,7 @@ const getThumbnailURL = (thumbnail_url, width, height) => {
 const Carousel = ({ streamsFeed, main }) => (
     <CarouselProvider
     naturalSlideWidth={1}
-    naturalSlideHeight={0.97}
+    naturalSlideHeight={1.15}
     totalSlides={streamsFeed.length}
     isPlaying={true}
     infinite={true}
@@ -26,6 +26,8 @@ const Carousel = ({ streamsFeed, main }) => (
                     <StreamSlide 
                     key={id} 
                     index={idx}
+                    showLive={online}
+                    imageOnError={ profile_image_url }
                     image={ online ? getThumbnailURL(thumbnail_url, 698, 393) : profile_image_url }
                     header={display_name}
                     description={ online ? title : description }
