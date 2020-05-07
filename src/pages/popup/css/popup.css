@@ -7,7 +7,6 @@ body, html {
     min-height: 375px;
 }
 
-
 .carousel-image {
     background-position:0 22%;
 	background-repeat:no-repeat;
@@ -29,3 +28,6 @@ body, html {
     overflow: auto;
     height: 60px
 }
+
+
+

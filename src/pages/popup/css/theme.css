@@ -1,0 +1,81 @@
+:root { 
+    --light-shades: #F0ECEE; 
+    --light-accent: #4685F2;
+    --main: #029402;  
+    --dark-accent: #557577;
+    --dark-shades: #1E2B4C; 
+}
+
+.bg-main {
+    background-color: #029402;
+}
+
+.bg-light-accent {
+    background-color: #4685F2;
+}
+
+.bg-light-shades {
+    background-color: #F0ECEE;
+}
+
+.bg-dark-accent {
+    background-color: #557577;
+}
+
+.bg-dark-shades {
+    background-color: #1E2B4C;
+}
+
+.txt-light-theme {
+    color: #1E2B4C;
+}
+
+.txt-dark-theme {
+    color: #F0ECEE;
+}
+
+.txt-main {
+    color: #029402;
+}
+  
+.txt-light-accent {
+    color: #4685F2;
+}
+
+.txt-dark-accent {
+    color: #557577;
+}
+
+.txt-white {
+    color: white;
+}
+
+#logo {
+    filter: invert(100%);
+}
+
+#navbar {
+    background-color: var(--dark-shades);
+}
+
+.carousel-content {
+    background-color: var(--dark-shades) !important;
+}
+
+.carousel-header {
+    color: var(--light-shades) !important;
+}
+
+.carousel-description {
+    color: var(--light-shades) !important;
+}
+
+.carousel-extra {
+    background-color: var(--main) !important;
+}
+
+.social {
+    color: white;
+    -webkit-box-shadow: 0 0 0 0 rgba(0,0,0,.1) inset !important;
+    box-shadow: 0 0 0 0 rgba(0,0,0,.1) inset !important;
+}

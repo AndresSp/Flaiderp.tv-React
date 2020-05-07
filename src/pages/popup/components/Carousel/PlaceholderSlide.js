@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Placeholder } from "semantic-ui-react"
+import { Card, Placeholder, Icon } from "semantic-ui-react"
 
 const PlaceholderSlide = () => (
     <Card fluid>
@@ -17,6 +17,8 @@ const PlaceholderSlide = () => (
                     <Placeholder.Line />
                 </Placeholder.Paragraph>
             </Placeholder>
+        </Card.Content>
+        <Card.Content extra>
         </Card.Content>
     </Card>
 )

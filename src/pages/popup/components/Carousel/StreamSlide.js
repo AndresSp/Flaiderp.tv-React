@@ -25,7 +25,7 @@ class StreamSlide extends React.PureComponent {
         return (
             <Slide index={index}>
                 <div style={{ padding: 5 }}>
-                    <Card fluid>
+                    <Card  fluid>
                         { 
                             showLive ? 
                             <TwitchPlayerEmbed preview={image} channel={channel}/> : 
@@ -39,7 +39,7 @@ class StreamSlide extends React.PureComponent {
                             className='carousel-image'/>
                         }
                         <Card.Content className='carousel-content'>
-                            <Card.Header>
+                            <Card.Header className='carousel-header'>
                                 { header } 
                                 <Label 
                                 style={{ marginLeft: '5px' }} 
@@ -51,15 +51,15 @@ class StreamSlide extends React.PureComponent {
                                 { description }
                                 </Card.Description>
                         </Card.Content>
-                        <Card.Content extra>
+                        <Card.Content className='carousel-extra' extra>
                             <a>
-                                <Icon circular link name='twitch' color='purple' />
+                                <Icon name='twitch' circular className={'social'}/>
                             </a>
                             <a>
-                                <Icon circular link name='youtube' color='red' />
+                                <Icon name='youtube' circular className={'social'}/>
                             </a>
                             <a>
-                                <Icon circular link name='discord' />
+                                <Icon name='discord' circular className={'social'}/>
                             </a>
                         </Card.Content>
                     </Card>
