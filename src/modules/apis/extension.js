@@ -1,10 +1,10 @@
 import * as browser from 'webextension-polyfill'
-import { CLIENT_ID } from "../../env.json";
+import * as Bowser from "bowser-mini";
+import { CLIENT_ID_CHROME, CLIENT_ID_FIREFOX, CLIENT_ID_EDGE } from "../../env.json";
 
 export const authExtension = async () => {
-    const client_id = CLIENT_ID;
-    const redirectUri = browser.identity.getRedirectURL('auth'); 
-
+    const client_id = getClientByBrowser(getBrowser());
+    const redirectUri = browser.identity.getRedirectURL(); 
     const auth_url = "https://id.twitch.tv/oauth2/authorize?client_id=" + client_id + "&redirect_uri=" + redirectUri + "&response_type=token";
 
     const redirectUrl = await browser.identity.launchWebAuthFlow({'url': auth_url, 'interactive': true});
@@ -39,10 +39,10 @@ export const createNotification = async (stream, profileImg, present = true) => 
     const icon = profileImg? await imgUrlToBlob(profileImg) : './../../assets/icon/128.png'
     const started_at = stream.started_at
 
-    
-    await browser.notifications.clear(userName)
+    try{
+        await browser.notifications.clear(userName)
 
-    await browser.notifications.create(
+        await browser.notifications.create(
         userName,
         {
             type:     'basic',
@@ -52,6 +52,9 @@ export const createNotification = async (stream, profileImg, present = true) => 
             contextMessage: `${present? 'Está' : 'Estuvo'} en directo - ${getStreamingTime(started_at)}`,
             priority: 0
         })
+    } catch(e){
+        console.log(e)
+    }
 }
 
 const getStreamingTime = (started_at) => {
@@ -96,13 +99,18 @@ async function imgUrlToBlob(imgUrl) {
 
 export const onClickNotificationHandler = (userName) => {
     const userNameUrl = userName.toLowerCase()
-    window.open(`https://www.twitch.tv/${userNameUrl}`, '_blank');
+    
+    getBrowser() == 'FIREFOX' ? 
+    browser.windows.create({url: `https://www.twitch.tv/${userNameUrl}`}) : 
+    window.open(`https://www.twitch.tv/${userNameUrl}`, '_blank')
+
     browser.notifications.clear(userName);
 }
 
 export const setBadge = async (amount, main = false) => {
 
     const badgeText = await browser.browserAction.getBadgeText({})
+    //await browser.browserAction.setBadgeBackgroundColor({color: [66,133,244,255]});
     let newBadgeText = ''
 
     if(main){
@@ -124,3 +132,28 @@ export const setBadge = async (amount, main = false) => {
 export const uninstall = async () => {
     return await browser.management.uninstallSelf({ showConfirmDialog: true })
 }
+
+export const getBrowser = () => {
+    const browser = Bowser.parse(window.navigator.userAgent)[0]
+
+    switch (browser) {
+        case 'C': return CHROME
+        case 'F': return FIREFOX
+        case 'x': return EDGE
+        default: return null
+    }
+}
+
+export const getClientByBrowser = (browser) => {
+
+    switch (browser) {
+        case CHROME: return CLIENT_ID_CHROME
+        case FIREFOX: return CLIENT_ID_FIREFOX
+        case EDGE: return CLIENT_ID_EDGE
+        default: return null
+    }
+}
+
+export const CHROME = 'CHROME'
+export const FIREFOX = 'FIREFOX'
+export const EDGE = 'EDGE'

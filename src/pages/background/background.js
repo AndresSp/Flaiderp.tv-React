@@ -18,23 +18,27 @@ browser.runtime.onUpdateAvailable.addListener(async (details) => {
 browser.runtime.onInstalled.addListener(async (details) => {
    const version = chrome.runtime.getManifest().version
    const reason = details.reason
-
-   switch (reason) {
-      case 'install':
-         await browser.storage.sync.clear()
-         break;
-      case 'update':
-         if(version === '2.0.0'){
-            await browser.storage.sync.clear()
-         }
-         break;
-      case 'chrome_update':
-      case 'shared_module_update':
-      default:
-         console.log('Other install events within the browser')
-         break;
+   console.log(reason)
+   try {
+      switch (reason) {
+         case 'install':
+               await browser.storage.sync.clear()
+            break;
+         case 'update':
+            if(version === '2.0.0'){
+               await browser.storage.sync.clear()
+            }
+            break;
+         default:
+            console.log('Other install events within the browser')
+            break;
+      }
+   } catch(e){
+      console.log(e)
    }
-   await browser.alarms.create('authAgain', { delayInMinutes: 1440, periodInMinutes: 1440 }) //each day
+
+   await browser.alarms.create('authAgain', { delayInMinutes: 1440, periodInMinutes: 1440 })
+    //each day
    await browser.alarms.create('validateToken', { when: 0, periodInMinutes: 30 })
    await browser.alarms.create('fetchStreamersBio', { when: 0, periodInMinutes: 60 })
    await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
