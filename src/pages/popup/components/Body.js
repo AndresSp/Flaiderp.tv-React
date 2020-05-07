@@ -48,7 +48,6 @@ const Body = ({ streamersBio, streams, mainStreamer, accessToken, authPending, o
             <Carousel streamsFeed={ feed } /> :
             <PlaceholderSlide/>
         }
-        
     </Container>
 )}
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Placeholder } from "semantic-ui-react"
 
 const PlaceholderSlide = () => (
-    <Card>
+    <Card fluid>
         <Placeholder>
             <Placeholder.Image className='carousel-image-placeholder' />
         </Placeholder>

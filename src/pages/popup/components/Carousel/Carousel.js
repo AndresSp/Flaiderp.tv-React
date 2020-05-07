@@ -22,11 +22,12 @@ const Carousel = ({ streamsFeed, main }) => (
     hasMasterSpinner={false}>
         <Slider spinner={() => <PlaceholderSlide/>}>
             {
-                Array.from(streamsFeed).map(({online, id, thumbnail_url, profile_image_url, display_name, title, description}, idx) => (
+                Array.from(streamsFeed).map(({online, id, user_name, thumbnail_url, profile_image_url, display_name, title, description}, idx) => (
                     <StreamSlide 
                     key={id} 
                     index={idx}
                     showLive={online}
+                    channel={user_name}
                     imageOnError={ profile_image_url }
                     image={ online ? getThumbnailURL(thumbnail_url, 698, 393) : profile_image_url }
                     header={display_name}

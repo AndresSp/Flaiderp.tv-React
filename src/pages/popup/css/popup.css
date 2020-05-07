@@ -1,5 +1,6 @@
 body, html {
     height: 400px;
+    min-width: 382px;
 }
 
 
@@ -7,13 +8,13 @@ body, html {
     background-position:0 22%;
 	background-repeat:no-repeat;
     background-size:cover;
-    height: 159px;
+    height: 193px;
     /* object-fit: cover;
     object-position: 0 22%; */
 }
 
 .carousel-image-placeholder {
-    height: 159px !important; 
+    height: 193px !important; 
 }
 
 .carousel-content {
