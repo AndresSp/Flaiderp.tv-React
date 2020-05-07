@@ -1,4 +1,4 @@
-import { FETCH_STREAMS, FETCH_STREAMS_SUCCESSFULLY, FETCH_STREAMS_ERROR, FETCH_STREAMS_CLEARED } from "../../../shared/actions/fetchStreams"
+import { FETCH_STREAMS, FETCH_STREAMS_SUCCESSFULLY, FETCH_STREAMS_ERROR, FETCH_STREAMS_CLEARED, FETCH_STREAMS_UNAUTHORIZED_ERROR } from "../../../shared/actions/fetchStreams"
 
 
 const initialState = {
@@ -19,7 +19,8 @@ export const fetchStreamsReducer = (state = initialState, action) => {
             return {
                 ...state,
                 pending: false,
-                data: action.payload.data
+                data: action.payload.data,
+                error: null
             }
         
         case FETCH_STREAMS_ERROR:

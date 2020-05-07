@@ -6,6 +6,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const ExtensionReloader  = require('webpack-extension-reloader');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const WebExtWebpackPlugin = require('@ianwalter/web-ext-webpack-plugin');
 
 function generateHtmlPlugins(items) {
     return items.map((name) => new HtmlWebpackPlugin(
@@ -15,6 +16,12 @@ function generateHtmlPlugins(items) {
       }
     ))
   }
+
+function checkEnvToBuildFFExt(mode) {
+    return mode != 'development' ? [new WebExtWebpackPlugin({ 
+        sourceDir: './dist'
+     })] : []
+}
 
 const PAGES_PATH = './src/pages'
 const mode = process.env.NODE_ENV;
@@ -100,7 +107,7 @@ module.exports = (env, argv) =>{
             { 
                 from: 'src',
                 to: path.resolve('dist'),
-                ignore: [ 'pages/**/*', 'modules/**/*', '.DS_Store' ]
+                ignore: [ 'pages/**/*', 'modules/**/*', 'shared/**/*', '.DS_Store' ]
             }
         ]),
         new ImageminPlugin({
@@ -108,7 +115,8 @@ module.exports = (env, argv) =>{
             pngquant: {
                 quality: '30-50'
             }
-        })
+        }),
+        ...checkEnvToBuildFFExt(mode)
     ]
 };
 }

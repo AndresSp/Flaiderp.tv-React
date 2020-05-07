@@ -3,15 +3,23 @@ import undoable, { includeAction } from 'redux-undo'
 import { configReducer } from './config'
 import { fetchStreamsReducer } from './fetchStreams'
 import { persistReducer } from 'redux-persist'
-import { syncStorage } from 'redux-persist-webextension-storage'
+import { syncStorage, localStorage } from 'redux-persist-webextension-storage'
 import { notificationsReducer } from './notifications'
 import { fetchStreamersBiosReducer } from './fetchStreamersBio'
 import { FETCH_STREAMS_SUCCESSFULLY } from '../../../shared/actions/fetchStreams'
+import { authReducer } from './auth'
+import { getBrowser } from '../../../modules/apis/extension'
 
-const syncStorageConfig = {
-    key: 'config',
-    storage: syncStorage
-  }
+const syncStorageConfigToConfigReducer = {
+  key: 'config',
+  storage: /*getBrowser() == 'FIREFOX'? localStorage :*/ syncStorage
+}
+
+const syncStorageConfigToAuthReducer = {
+  key: 'auth',
+  storage: /*getBrowser() == 'FIREFOX'? localStorage :*/ syncStorage,
+  whitelist: ['accessToken']
+}
 
 const undoableConfig = {
   limit: 10,
@@ -20,7 +28,8 @@ const undoableConfig = {
 
 
 export default combineReducers({
-    config: persistReducer(syncStorageConfig, configReducer),
+    config: persistReducer(syncStorageConfigToConfigReducer, configReducer),
+    auth: persistReducer(syncStorageConfigToAuthReducer, authReducer),
     fetchBios: fetchStreamersBiosReducer,
     fetchStreams: undoable(fetchStreamsReducer, undoableConfig),
     notifications: notificationsReducer

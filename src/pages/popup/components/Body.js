@@ -1,6 +1,8 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Card, Placeholder, CardContent } from 'semantic-ui-react';
 import Carousel from './Carousel/Carousel';
+import OauthModal from './Modal/OauthModal';
+import PlaceholderSlide from './Carousel/PlaceholderSlide';
 
 const styles = {
     container: {
@@ -9,6 +11,7 @@ const styles = {
 }
 
 const carouselFeed = (streamersBio, streams, main) => {
+    
     const bioWithStreamsON = Array.from(streamersBio).map((bio) => {
         const streamOn = findStreamON(bio.id, streams)
         return {
@@ -35,10 +38,17 @@ const carouselFeed = (streamersBio, streams, main) => {
 
 const findStreamON = (id, streams) => streams.find((stream) => stream.user_id == id)
 
-const Body = ({ streamersBio, streams, mainStreamer }) => (
+const Body = ({ streamersBio, streams, mainStreamer, accessToken, authPending, onAuthorize }) => {
+    const feed = carouselFeed(streamersBio, streams, mainStreamer)
+    return (
     <Container style={styles.container}>
-        <Carousel streamsFeed={ carouselFeed(streamersBio, streams, mainStreamer) } />
+        <OauthModal hasAccessToken={ !!accessToken } pending={ authPending } onAuth={ onAuthorize }/>
+        { 
+            feed.length > 0 ? 
+            <Carousel streamsFeed={ feed } /> :
+            <PlaceholderSlide/>
+        }
     </Container>
-)
+)}
 
 export default Body

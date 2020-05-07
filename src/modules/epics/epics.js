@@ -1,18 +1,50 @@
-import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH_STREAMS, fetchStreams, fetchStreamsCleared, CHECK_DIFF_STREAMS } from "../../shared/actions/fetchStreams";
+import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH_STREAMS, fetchStreams, fetchStreamsCleared, CHECK_DIFF_STREAMS, fetchStreamsUnauthorizedError, FETCH_STREAMS_UNAUTHORIZED_ERROR } from "../../shared/actions/fetchStreams";
 import { combineEpics, ofType } from "redux-observable";
-import { from, of, forkJoin } from "rxjs";
-//import { switchMap } from 'rxjs/operator/switchMap';
+import { from, of } from "rxjs";
 import { map, catchError, switchMap, takeUntil, filter, mapTo, concatMap, retry } from 'rxjs/operators';
-import { fetchStreamsByUserId, fetchStreamersInfo } from "../apis/twitch";
-import { createNotification, setBadge } from "../apis/extension";
+import { fetchStreamsByUserId, fetchStreamersInfo, validateToken } from "../apis/twitch";
+import { createNotification, setBadge, authExtension } from "../apis/extension";
 import { TOGGLE_STATUS } from "../../shared/actions/config";
 import { SHOW_NOTIFICATION, clearPendingNotification, showNotification, addNotificationToQueue, UPDATE_BADGE, badgeUpdated, updateBadge } from "../../shared/actions/notifications";
-import { FETCH_STREAMERS_BIO, fetchStreamersBioSuccessfully, fetchStreamersBioError } from "../../shared/actions/fetchStreamersBio";
+import { FETCH_STREAMERS_BIO, fetchStreamersBioSuccessfully, fetchStreamersBioError, fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
+import { AUTH, authSuccessfully, authError, auth, clearToken, CLEAR_TOKEN, VALIDATE_TOKEN } from "../../shared/actions/auth";
 
+export const authEpic = (action$, state$) => action$.pipe(
+    ofType(AUTH),
+    switchMap(action => from(authExtension()).pipe(
+        concatMap(result => result? [
+            authSuccessfully(result), 
+            fetchStreamersBio([
+            ...state$.value.config.streamers.main, 
+            ...state$.value.config.streamers.enabled
+        ]), fetchStreams([
+            ...state$.value.config.streamers.main, 
+            ...state$.value.config.streamers.enabled
+        ])] : [authError('denied')]),
+        catchError(error => of(authError(error)))
+        )
+    )
+)
+
+export const unauthorizedEpic = (action$, state$) => action$.pipe(
+    ofType(FETCH_STREAMS_UNAUTHORIZED_ERROR),
+    mapTo(clearToken())
+    //concatMap(response => [clearToken(), auth()])
+)
+
+export const validateTokenEpic = (action$, state$) => action$.pipe(
+    ofType(VALIDATE_TOKEN),
+    filter(() => state$.value.auth.accessToken),
+    switchMap(action => from(validateToken(state$.value.auth.accessToken)).pipe(
+        catchError(error => clearToken())
+    )
+    )
+)
 
 export const fetchBiosEpic = (action$, state$) => action$.pipe(
     ofType(FETCH_STREAMERS_BIO),
-    switchMap(action => from(fetchStreamersInfo(action.streamers)).pipe(
+    filter(() => state$.value.auth.accessToken),
+    switchMap(action => from(fetchStreamersInfo(action.streamers, state$.value.auth.accessToken)).pipe(
         map(response => fetchStreamersBioSuccessfully(response)),
         takeUntil(action$.pipe(
             ofType(FETCH_STREAMERS_BIO)
@@ -26,14 +58,17 @@ export const fetchBiosEpic = (action$, state$) => action$.pipe(
 export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     ofType(FETCH_STREAMS),
     filter(() => state$.value.config.status),
-    switchMap(action => from(fetchStreamsByUserId(action.streamers)).pipe(
+    filter(() => state$.value.auth.accessToken),
+    switchMap(action => {
+        return from(fetchStreamsByUserId(action.streamers, state$.value.auth.accessToken)).pipe(
         concatMap(response => [fetchStreamsSuccessfully(response), updateBadge()]),
         takeUntil(action$.pipe(
             ofType(FETCH_STREAMS)
             )),
         retry(2),
-        catchError(error => of(fetchStreamsError(error)))
+        catchError(error => error.status == 401? of(fetchStreamsUnauthorizedError(error)) : of(fetchStreamsError(error)))
         )
+    }
     )
 )
 
@@ -122,6 +157,8 @@ export const updateBadgeEpic = (action$, state$) => action$.pipe(
 )
 
 export default combineEpics(
+    authEpic,
+    unauthorizedEpic,
     fetchBiosEpic,
     fetchStreamsEpic,
     checkFetchStreamsDiffEpic,

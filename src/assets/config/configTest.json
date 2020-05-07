@@ -1,6 +1,4 @@
 {
-    "access_token": null,
-    "refresh_token": null,
     "status": true,
     "intervals": {
         "check": 1
@@ -15,7 +13,9 @@
             103588982,
             94055227,
             446608995,
-            57744501
+            57744501,
+            244731172,
+            56584445
         ],
         "disabled": []
     }
