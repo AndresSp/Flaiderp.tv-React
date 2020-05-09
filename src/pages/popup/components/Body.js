@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Card, Placeholder, CardContent } from 'semantic-ui-react';
-import Carousel from './Carousel/Carousel';
 import OauthModal from './Modal/OauthModal';
-import PlaceholderSlide from './Carousel/PlaceholderSlide';
+import Carousel from './StreamsCarousel/StreamsCarousel';
+import PlaceholderSlide from './StreamsCarousel/PlaceholderSlide';
 
 const styles = {
     container: {

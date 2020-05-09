@@ -50,6 +50,11 @@
     color: white;
 }
 
+body, html {
+    background-color: var(--light-shades);
+}
+
+
 #logo {
     filter: invert(100%);
 }
@@ -68,6 +73,27 @@
 
 .carousel-description {
     color: var(--light-shades) !important;
+}
+
+.ui.inverted.placeholder {
+    background-color: var(--dark-shades) !important;
+    /* color: var(--light-shades) !important; */
+}
+
+.ui.inverted.placeholder>:before {
+    background-color: var(--dark-shades) !important;
+}
+
+.ui.inverted.placeholder .line {
+    background-color: var(--dark-shades) !important;
+}
+
+.ui.inverted.placeholder .line:after {
+    background-color: var(--dark-shades) !important;
+}
+
+.ui.embed {
+    background-color: var(--dark-shades) !important;
 }
 
 .carousel-extra {

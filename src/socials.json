@@ -1,19 +1,58 @@
 {
-    "flaiveth": [
-        { "twitch": "https://www.twitch.tv/flaiveth" },
-        { "facebook": "https://www.facebook.com/FlaivethCosplay/" },
-        { "twitter": "https://twitter.com/Flaiveth" },
-        { "instagram": "https://www.instagram.com/flaiveth_cosplay/" },
-        { "youtube": "https://www.youtube.com/channel/UCZDhcdvZ7bwzAyPOZMrBf6w" },
-        { "patreon": "https://www.patreon.com/flaiveth" },
-        { "shoptly": "http://shoptly.com/flaiveth" }
-    ],
-    "sunny": [
-        { "twitch": "https://www.twitch.tv/sunny" },
-        { "twitter": "https://www.twitter.com/SunnyNya" },
-        { "facebook": "https://www.facebook.com/eevee.lol" },
-        { "instagram": "https://www.instagram.com/sunnyuwu" },
-        { "youtube": "https://www.youtube.com/SunnyASMR" },
-        { "kofi": "https://ko-fi.com/sunnyasmr" }
-    ]
+    "144360146": {
+        "twitch": "https://www.twitch.tv/flaiveth/",
+        "facebook": "https://www.facebook.com/FlaivethCosplay/",
+        "twitter": "https://twitter.com/Flaiveth/",
+        "instagram": "https://www.instagram.com/flaiveth_cosplay/",
+        "youtube": "https://www.youtube.com/channel/UCZDhcdvZ7bwzAyPOZMrBf6w/",
+        "patreon": "https://www.patreon.com/flaiveth/",
+        "shopping bag": "http://shoptly.com/flaiveth/",
+        "coffee": " https://ko-fi.com/flaiveth"
+    },
+    "52326616": {
+        "twitch": "https://www.twitch.tv/sunny/",
+        "twitter": "https://www.twitter.com/SunnyNya/",
+        "facebook": "https://www.facebook.com/eevee.lol/",
+        "instagram": "https://www.instagram.com/sunnyuwu/",
+        "youtube": "https://www.youtube.com/SunnyASMR/",
+        "coffee": "https://ko-fi.com/sunnyasmr/"
+    },
+    "94415649": {
+        "twitch": "https://www.twitch.tv/brenditz/",
+        "instagram": "https://www.instagram.com/brenditzcosplay/",
+        "facebook": "https://www.facebook.com/brenditzcosplay/",
+        "youtube": "https://www.youtube.com/brenditz/",
+        "patreon": "https://www.patreon.com/Brenditz/",
+        "tag": "https://brenditz.storenvy.com/",
+        "coffee": "https://ko-fi.com/brenditz/",
+        "lock": "https://onlyfans.com/brenditz/"
+    },
+    "127331253": {
+        "twitch": "https://www.twitch.tv/gabeegaming/",
+        "instagram": "https://www.instagram.com/gabeegaming/",
+        "facebook": "https://www.facebook.com/gabeegaming/",
+        "twitter": "https://twitter.com/gabeegaming/"
+    },
+    "133505839": {
+        "twitch": "https://twitch.tv/hirukoRL/",
+        "twitter": "https://twitter.com/HirukoRL/",
+        "instagram": "https://www.instagram.com/hirukorl/",
+        "youtube": "https://www.youtube.com/user/HirukoZProject/",
+        "facebook": "https://www.facebook.com/HirukoRL/"
+    },
+    "196124269": {
+        "twitch": "https://www.twitch.tv/adalokumura1/",
+        "twitter": "https://twitter.com/AdalOkumura/",
+        "instagram": "https://www.instagram.com/adalokumura/",
+        "facebook": "https://www.facebook.com/AdalOkumura/",
+        "youtube": "https://www.youtube.com/channel/UCRZUHWW6G_Q8WczA2Ndzpig"
+    },
+    "227705719": {
+        "twitch": "https://www.twitch.tv/valkryon365/",
+        "discord": "https://discord.com/invite/Dxpn52J/",
+        "twitter": "https://twitter.com/Valkryon1/",
+        "youtube": "https://www.youtube.com/c/_Valkryon/",
+        "instagram": "https://www.instagram.com/valkryon365/",
+        "facebook": "https://www.facebook.com/Valkryon365/"
+    }
 }

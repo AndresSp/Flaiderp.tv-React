@@ -3,6 +3,7 @@ import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext  } from 'pure-r
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import StreamSlide from './StreamSlide';
 import PlaceholderSlide from './PlaceholderSlide';
+import socials from './../../../../socials.json'
 
 const styles = {}
 
@@ -12,7 +13,7 @@ const getThumbnailURL = (thumbnail_url, width, height) => {
     .replace('{height}', `${height}`)
 }
 
-const Carousel = ({ streamsFeed, main }) => (
+const StreamsCarousel = ({ streamsFeed, main }) => (
     <CarouselProvider
     naturalSlideWidth={1}
     naturalSlideHeight={1.15}
@@ -32,6 +33,7 @@ const Carousel = ({ streamsFeed, main }) => (
                     image={ online ? getThumbnailURL(thumbnail_url, 698, 393) : profile_image_url }
                     header={display_name}
                     description={ online ? title : description }
+                    socials={socials[id]}
                 />
                 ))
             }
@@ -41,4 +43,4 @@ const Carousel = ({ streamsFeed, main }) => (
     </CarouselProvider>
 )
 
-export default Carousel
+export default StreamsCarousel
