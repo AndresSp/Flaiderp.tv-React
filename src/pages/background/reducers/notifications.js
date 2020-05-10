@@ -1,4 +1,4 @@
-import { ADDED_NOTIFICATION_TO_QUEUE, SHOW_NOTIFICATION, CLEAR_PENDING_NOTIFICATION } from "../../../shared/actions/notifications"
+import { ADDED_NOTIFICATION_TO_QUEUE, SHOW_NOTIFICATION, CLEAR_PENDING_NOTIFICATION, CLEAR_QUEUE } from "../../../shared/actions/notifications"
 
 const initialState = {
     queue: [],
@@ -22,6 +22,12 @@ export const notificationsReducer = (state = initialState, action) => {
                 ...state,
                 queue: newQ2,
                 pending: notificationToShow
+            }
+
+        case CLEAR_QUEUE:
+            return {
+                ...state,
+                queue: []
             }
 
         case CLEAR_PENDING_NOTIFICATION:

@@ -11,7 +11,7 @@ const styles = {
   }
 }
 
-const NavBar = (props) => (
+const NavBar = ({ status, onToggleStatus }) => (
     <Menu id='navbar' fixed='top' inverted borderless>
       <Menu.Item>
         <Header inverted size='medium' style={styles.header}>
@@ -20,8 +20,8 @@ const NavBar = (props) => (
         </Header>
       </Menu.Item>
       <Menu.Menu position='right'>
-        <Menu.Item icon>
-          <Icon link name='bell' size='large'/>
+        <Menu.Item icon onClick={ () => onToggleStatus() }>
+          <Icon  link name={ status ? 'bell' : 'bell slash' } size='large'/>
         </Menu.Item>
         <Menu.Item icon>
           <Icon link name='ellipsis vertical' size='large'/>

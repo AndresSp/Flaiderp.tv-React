@@ -21,7 +21,6 @@ class StreamSlide extends React.PureComponent {
     render(){
         
         const { index, showLive, channel, imageOnError, image, header, description, socials } = this.props
-
         return (
             <Slide index={index}>
                 <div style={{ padding: 5 }}>
@@ -58,13 +57,6 @@ class StreamSlide extends React.PureComponent {
                                         <Icon name={social} circular className={'social'}/>
                                     </a>)) : '')
                             }
-                            
-                            {/* <a>
-                                <Icon name='youtube' circular className={'social'}/>
-                            </a>
-                            <a>
-                                <Icon name='discord' circular className={'social'}/>
-                            </a> */}
                         </Card.Content>
                     </Card>
                 </div>

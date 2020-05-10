@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Card, Placeholder, CardContent } from 'semantic-ui-react';
 import OauthModal from './Modal/OauthModal';
-import Carousel from './StreamsCarousel/StreamsCarousel';
+import StreamsCarousel from './StreamsCarousel/StreamsCarousel';
 import PlaceholderSlide from './StreamsCarousel/PlaceholderSlide';
 
 const styles = {
@@ -17,6 +17,7 @@ const carouselFeed = (streamersBio, streams, main) => {
         return {
             ...bio,
             ...streamOn,
+            ...{ id: bio.id },
             ...streamOn ? { online: true } : { online: false }
         }
     })
@@ -45,7 +46,7 @@ const Body = ({ streamersBio, streams, mainStreamer, accessToken, authPending, o
         <OauthModal hasAccessToken={ !!accessToken } pending={ authPending } onAuth={ onAuthorize }/>
         { 
             feed.length > 0 ? 
-            <Carousel streamsFeed={ feed } /> :
+            <StreamsCarousel streamsFeed={ feed } /> :
             <PlaceholderSlide/>
         }
     </Container>

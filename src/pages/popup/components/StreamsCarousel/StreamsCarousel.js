@@ -25,7 +25,8 @@ const StreamsCarousel = ({ streamsFeed, main }) => (
             {
                 Array.from(streamsFeed).map(({online, id, user_name, thumbnail_url, profile_image_url, display_name, title, description}, idx) => (
                     <StreamSlide 
-                    key={id} 
+                    key={id}
+                    id={id} 
                     index={idx}
                     showLive={online}
                     channel={user_name}
@@ -33,8 +34,7 @@ const StreamsCarousel = ({ streamsFeed, main }) => (
                     image={ online ? getThumbnailURL(thumbnail_url, 698, 393) : profile_image_url }
                     header={display_name}
                     description={ online ? title : description }
-                    socials={socials[id]}
-                />
+                    socials={socials[id]}/>
                 ))
             }
         </Slider>

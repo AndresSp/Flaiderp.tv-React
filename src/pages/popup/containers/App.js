@@ -7,6 +7,7 @@ import { selectStreams } from '../../background/reducers/fetchStreams'
 import { selectStreamsBio } from '../../background/reducers/fetchStreamersBio'
 import { selectAccessToken, selectAuthPending } from '../../background/reducers/auth'
 import { auth } from '../../../shared/actions/auth'
+import { toggleStatus } from '../../../shared/actions/config'
 
 
 class App extends React.PureComponent {
@@ -15,9 +16,10 @@ class App extends React.PureComponent {
     }
 
     render(){
+        const { status, onToggleStatus  } = this.props
         return (
             <Fragment>
-                <NavBar { ...this.props.status }/>
+                <NavBar status={status} onToggleStatus={onToggleStatus}/>
                 <Body { ...this.props }/>
             </Fragment>
         )}
@@ -37,7 +39,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    onAuthorize: () => dispatch(auth())
+    onAuthorize: () => dispatch(auth()),
+    onToggleStatus: () => dispatch(toggleStatus())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

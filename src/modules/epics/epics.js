@@ -1,11 +1,11 @@
-import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH_STREAMS, fetchStreams, fetchStreamsCleared, CHECK_DIFF_STREAMS, fetchStreamsUnauthorizedError, FETCH_STREAMS_UNAUTHORIZED_ERROR } from "../../shared/actions/fetchStreams";
+import { fetchStreamsPending, fetchStreamsError, fetchStreamsSuccessfully, FETCH_STREAMS, fetchStreams, fetchStreamsCleared, CHECK_DIFF_STREAMS, fetchStreamsUnauthorizedError, FETCH_STREAMS_UNAUTHORIZED_ERROR, checkDiffStreams } from "../../shared/actions/fetchStreams";
 import { combineEpics, ofType } from "redux-observable";
 import { from, of } from "rxjs";
 import { map, catchError, switchMap, takeUntil, filter, mapTo, concatMap, retry } from 'rxjs/operators';
 import { fetchStreamsByUserId, fetchStreamersInfo, validateToken } from "../apis/twitch";
 import { createNotification, setBadge, authExtension } from "../apis/extension";
 import { TOGGLE_STATUS } from "../../shared/actions/config";
-import { SHOW_NOTIFICATION, clearPendingNotification, showNotification, addNotificationToQueue, UPDATE_BADGE, badgeUpdated, updateBadge } from "../../shared/actions/notifications";
+import { SHOW_NOTIFICATION, clearPendingNotification, showNotification, addNotificationToQueue, UPDATE_BADGE, badgeUpdated, updateBadge, clearQueue } from "../../shared/actions/notifications";
 import { FETCH_STREAMERS_BIO, fetchStreamersBioSuccessfully, fetchStreamersBioError, fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
 import { AUTH, authSuccessfully, authError, auth, clearToken, CLEAR_TOKEN, VALIDATE_TOKEN } from "../../shared/actions/auth";
 
@@ -57,7 +57,7 @@ export const fetchBiosEpic = (action$, state$) => action$.pipe(
 
 export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     ofType(FETCH_STREAMS),
-    filter(() => state$.value.config.status),
+    //filter(() => state$.value.config.status),
     filter(() => state$.value.auth.accessToken),
     switchMap(action => {
         return from(fetchStreamsByUserId(action.streamers, state$.value.auth.accessToken)).pipe(
@@ -72,17 +72,15 @@ export const fetchStreamsEpic = (action$, state$) => action$.pipe(
     )
 )
 
-export const resetWhenEnabledEpic = (action$, state$) => action$.pipe(
+export const clearWhenDisabledEpic = (action$, state$) => action$.pipe(
     ofType(TOGGLE_STATUS),
-    filter(() => state$.value.config.status),
-    mapTo(fetchStreams([
-        ...state$.value.config.streamers.main, 
-        ...state$.value.config.streamers.enabled
-    ]))
+    filter(() => !state$.value.config.status),
+    concatMap(() => [clearQueue(), clearPendingNotification()])
 )
 
 export const checkFetchStreamsDiffEpic = (action$, state$) => action$.pipe(
     ofType(CHECK_DIFF_STREAMS),
+    filter(() => state$.value.config.status),
     concatMap(() => {
         const mainStreamer = state$.value.config.streamers.main.length ? state$.value.config.streamers.main[0] : undefined
         const prevStreams = state$.value.fetchStreams.past.length ? Array.from(state$.value.fetchStreams.past)[state$.value.fetchStreams.past.length - 1].data : []
@@ -163,7 +161,7 @@ export default combineEpics(
     fetchStreamsEpic,
     checkFetchStreamsDiffEpic,
     showNotificationsEpic,
-    resetWhenEnabledEpic,
+    clearWhenDisabledEpic,
     updateBadgeEpic
     //clearWhenDisabledEpic
 );
