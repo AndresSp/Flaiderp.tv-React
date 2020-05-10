@@ -163,5 +163,4 @@ export default combineEpics(
     showNotificationsEpic,
     clearWhenDisabledEpic,
     updateBadgeEpic
-    //clearWhenDisabledEpic
 );
