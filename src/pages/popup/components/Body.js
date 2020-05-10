@@ -32,8 +32,6 @@ const carouselFeed = (streamersBio, streams, main) => {
         }
 
     }
-
-        console.log(bioWithStreamsON)
         return [...bioWithStreamsON]
     }
 

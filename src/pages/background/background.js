@@ -18,7 +18,7 @@ browser.runtime.onUpdateAvailable.addListener(async (details) => {
 browser.runtime.onInstalled.addListener(async (details) => {
    const version = chrome.runtime.getManifest().version
    const reason = details.reason
-   console.log(reason)
+   // console.log(reason)
    try {
       switch (reason) {
          case 'install':
@@ -48,7 +48,7 @@ browser.runtime.onInstalled.addListener(async (details) => {
  onClickNotificationHandler(userName));
 
  browser.storage.onChanged.addListener(async (changes) => {
-    console.log(changes)
+   //  console.log(changes)
  })
 
  browser.alarms.onAlarm.addListener(async ({ name }) => {
