@@ -20,7 +20,7 @@ Install library dependencies:
 npm install
 ```
 
-You will need to register the app in [Twitch Developers](https://dev.twitch.tv/) to get a client ID and authenticate under user permissions (OAuth, Implicit Flow)
+You will need to register the app in [Twitch Developers](https://dev.twitch.tv/) to get a client ID and authenticate under user permissions (OAuth, Implicit Flow). After that you can include a env.json file (follow env.example.json)
 
 Use a browser to test the extension:
 
