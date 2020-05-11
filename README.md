@@ -19,6 +19,9 @@ Install library dependencies:
 ```
 npm install
 ```
+
+You will need to register the app in [Twitch Developers](https://dev.twitch.tv/) to get a client ID and authenticate under user permissions (OAuth, Implicit Flow)
+
 Use a browser to test the extension:
 
 (Chrome) More Tools > Extensions > Enable Developer Mode > Load unpacked (Load project's directory)
