@@ -8,15 +8,20 @@ Flaiderp.tv is a chrome extension that notifies you if [Flaiveth](https://www.tw
 
 ## Installation
 
+Clone repository:
+
 ```
 git clone https://github.com/AndresSp/Flaiderp.tv-React.git
 ```
 
+Install library dependencies:
+
 ```
 npm install
 ```
+Use a browser to test the extension:
 
-More Tools > Extensions > Enable Developer Mode > Load unpacked (Load root project's directory)
+(Chrome) More Tools > Extensions > Enable Developer Mode > Load unpacked (Load root project's directory)
 
 ## Development
 This repository includes scripts to enable easier development and testing of the extension. To start the whole application ecosystem for development,  run the following command
@@ -26,7 +31,7 @@ npm start
 ```
 
 ## Running tests
-To run the tests, make sure you are in the `root` directory:
+To run the tests, make sure you are in the repository directory:
 
 ```
 npm test
