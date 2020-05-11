@@ -3,7 +3,7 @@
 Flaiderp.tv is a chrome extension that notifies you if [Flaiveth](https://www.twitch.tv/flaiveth) (a twitch streamer) and her friends are live. You could see a preview of what they are doing instantly.
 
 ## Requirements
-- Node / Npm
+- Node 8+
 - This was developed on Mac ecosystem, but you can change some npm scripts to run on Windows
 
 ## Installation
@@ -28,6 +28,14 @@ This repository includes scripts to enable easier development and testing of the
 
 ```
 npm start
+```
+
+## Build
+
+You can build a production release with this command
+
+```
+npm run build
 ```
 
 ## Running tests
