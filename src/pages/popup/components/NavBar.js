@@ -54,9 +54,10 @@ class NavBar extends React.PureComponent {
                           marginRight: '25px'
                           }} verticalAlign='middle' size='tiny' rounded src='./../../../assets/andressp.jpg' />
                         <Button.Group inverted vertical labeled icon>
-                          <Button icon='github' content='@AndresSp' fluid color='grey' inverted href='https://github.com/AndresSp' target="_blank"/>
+                          <Button icon='github' content='@AndresSp' fluid color='green' inverted href='https://github.com/AndresSp' target="_blank"/>
+                          <Button icon='linkedin' content='Andrés Tuñón' color='violet' inverted fluid href='https://www.linkedin.com/in/andresspit/' target="_blank"/>
                           <Button icon='twitter' content='@AndresSpDev' color='blue' inverted fluid href='https://twitter.com/AndresSpDev' target="_blank"/>
-                          <Button icon='twitter' content='@MrDinoDev (Alt)' color='blue' inverted fluid href='https://twitter.com/MrDinoDev' target="_blank"/>
+                          <Button icon='twitter' content='@MrDinoDev' color='blue' inverted fluid href='https://twitter.com/MrDinoDev' target="_blank"/>
                         </Button.Group>
                       </Segment>
                       <Button inverted color='green' fluid onClick={() => this.onClose()}>Cerrar</Button>

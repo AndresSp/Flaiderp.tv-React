@@ -41,25 +41,25 @@ const StreamsCarousel = ({ streamsFeed, main }) => (
         </Slider>
         <div className='carousel-controls'>
                 <ButtonFirst className='control bg-light-accent txt-dark-theme'>
-                    <Icon name='angle double left'/>
+                    <Icon name='angle double left' className='control-icon'/>
                 </ButtonFirst>
 
                 <ButtonBack className='control bg-light-accent txt-dark-theme'>
-                    <Icon name='angle left'/>
+                    <Icon name='angle left' className='control-icon'/>
                 </ButtonBack>
 
                 <ButtonPlay
-                className='control bg-light-accent txt-dark-theme' 
-                childrenPlaying={<Icon name='pause circle'/>}
-                childrenPaused={<Icon name='play circle'/>}>
+                className='control bg-light-accent txt-dark-theme'
+                childrenPlaying={<Icon name='pause circle' className='control-icon'/>}
+                childrenPaused={<Icon name='play circle' className='control-icon'/>}>
                 </ButtonPlay>
 
                 <ButtonNext className='control bg-light-accent txt-dark-theme'>
-                    <Icon name='angle right'/>
+                    <Icon name='angle right' className='control-icon'/>
                 </ButtonNext>
 
                 <ButtonLast className='control bg-light-accent txt-dark-theme'>
-                    <Icon name='angle double right'/>
+                    <Icon name='angle double right' className='control-icon'/>
                 </ButtonLast>
         </div>
     </CarouselProvider>

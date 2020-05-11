@@ -41,6 +41,10 @@ body, html {
     border-radius: 4px;
 }
 
+.control-icon {
+    margin: 0 !important;
+}
+
 button:disabled {
     opacity: 0.8;
 }
