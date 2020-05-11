@@ -25,5 +25,6 @@ doc/
 .idea
 .secret
 
-
+env.json
 node_modules
+coverage

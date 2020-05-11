@@ -1,28 +1,66 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ReplaceHashInFileWebpackPlugin = require('replace-hash-in-file-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const ExtensionReloader  = require('webpack-extension-reloader');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const WebExtWebpackPlugin = require('@ianwalter/web-ext-webpack-plugin');
+const ChunksWebpackPlugin = require('chunks-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
+const DashboardPlugin = require("webpack-dashboard/plugin");
+
+function generateHtmlPlugins(items) {
+    return items.map((name) => new HtmlWebpackPlugin(
+      {
+        filename: `./${name}.html`,
+        chunks: [ name ],
+      }
+    ))
+  }
+
+function checkEnvToBuildFFExt(mode) {
+    return mode != 'development' ? [new WebExtWebpackPlugin({ 
+        sourceDir: './dist'
+     })] : []
+}
+
+const PAGES_PATH = './src/pages'
+const mode = process.env.NODE_ENV;
 
 module.exports = (env, argv) =>{
     return  {
-    watch:  argv.mode != 'production',
+    mode,
     entry: {
-        'background': './src/background.js',
-        'popup': './src/popup/js/popup.js',
-        'options': './src/options/js/options.js'
+        'configure-webpack': './configure-webpack.js',
+        'babel-polyfill': 'babel-polyfill',
+        'background': `${PAGES_PATH}/background/background.js`,
+        'popup': `${PAGES_PATH}/popup/popup.js`,
+        'options': `${PAGES_PATH}/options/options.js`
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'js/[name].[hash].js',
-        chunkFilename: '[name]'
+        filename: '[name].js',
+        chunkFilename: '[name]',
+        libraryTarget: "umd"
     },
-    devtool: 'cheap-module-source-map',
+    devtool: '',
     resolve: {
         extensions: ['.js', '.jsx']
     },
+    // optimization: {
+	// 	splitChunks: {
+    //         chunks: 'all'
+	// 		// cacheGroups: {
+	// 		// 	commons: {
+	// 		// 		test: /[\\/]node_modules[\\/]/,
+	// 		// 		name: 'vendors',
+	// 		// 		chunks: 'all'
+	// 		// 	}
+	// 		// }
+	// 	}
+	// },
     module: {
         rules: [
             {
@@ -32,17 +70,16 @@ module.exports = (env, argv) =>{
             },
             {
                 test: /\.css$/,
-                exclude: /node_modules/,
                 use: [
                     { loader: 'style-loader' },
                     { 
                         loader: 'css-loader',
-                        options: {
-                            modules: {
-                                localIdentName: "[name]__[local]___[hash:base64:5]",
-                            },														
-                            sourceMap: true
-                        }
+                        // options: {
+                        //     modules: {
+                        //         localIdentName: "[name]__[local]___[hash:base64:5]",
+                        //     },														
+                        //     sourceMap: true
+                        // }
                      },
                      { 
                          loader: 'postcss-loader',
@@ -56,48 +93,53 @@ module.exports = (env, argv) =>{
                 ]
             },
             {
-                test: /\.(png|jpe?g|gif)$/,
-                loader: 'url-loader?limit=10000&name=img/[name].[ext]'
+                test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+                loader: 'url-loader',
+                options: {
+                    limit: 10000
+                }
             }
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            template: __dirname + '/src/index.html',
-            filename: './popup.html',
-            inject: 'body',
-            chunks: ['popup']
+        new DashboardPlugin(),
+        new ChunksWebpackPlugin(),
+        new BrotliPlugin({
+			asset: '[path].br[query]',
+			test: /\.(js|css|html|svg)$/,
+			threshold: 10240,
+			minRatio: 0.8
+		}),
+        new CleanWebpackPlugin({
+            cleanStaleWebpackAssets: false
         }),
-        new HtmlWebpackPlugin({
-            template: __dirname + '/src/index.html',
-            filename: './options.html',
-            inject: 'body',
-            chunks: ['options']
+        new ExtensionReloader({
+            entries: {
+                background: 'background',
+                extensionPage: ['popup', 'options']
+              }
         }),
+        ...generateHtmlPlugins(
+            [
+              'background',
+              'popup',
+              'options'
+            ]
+        ),
         new CopyPlugin([
-            { from: './src/manifest.json' },
-            { from: './src/config/config.json'  },
-            { from: './src/assets/icon', to: './icons'}
+            { 
+                from: 'src',
+                to: path.resolve('dist'),
+                ignore: [ 'pages/**/*', 'modules/**/*', 'shared/**/*', '.DS_Store' ]
+            }
         ]),
-        new ReplaceHashInFileWebpackPlugin([{
-            dir: 'dist',
-            files: ['manifest.json'],
-            rules: [{
-                search: /%%background%%/,
-                replace: 'js/background.[hash].js'
-            },
-            {
-                search: /%%options%%/,
-                replace: 'js/options.[hash].js'
-            }]
-        }]),
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
             pngquant: {
                 quality: '30-50'
             }
-        })
+        }),
+        ...checkEnvToBuildFFExt(mode)
     ]
 };
 }
