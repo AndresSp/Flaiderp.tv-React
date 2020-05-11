@@ -4,7 +4,7 @@ body, html {
 }
 
 #root {
-    min-height: 375px;
+    min-height: 410px;
 }
 
 .carousel-image {
@@ -27,6 +27,26 @@ body, html {
 .carousel-description {
     overflow: auto;
     height: 60px
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.control {
+    height: 25px;
+    margin-left: 2px;
+    margin-right: 2px;
+    border-radius: 4px;
+}
+
+.control-icon {
+    margin: 0 !important;
+}
+
+button:disabled {
+    opacity: 0.8;
 }
 
 

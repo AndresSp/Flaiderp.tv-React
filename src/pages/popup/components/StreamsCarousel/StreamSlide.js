@@ -20,8 +20,7 @@ class StreamSlide extends React.PureComponent {
 
     render(){
         
-        const { index, showLive, channel, imageOnError, image, header, description } = this.props
-
+        const { index, showLive, channel, imageOnError, image, header, description, socials } = this.props
         return (
             <Slide index={index}>
                 <div style={{ padding: 5 }}>
@@ -52,15 +51,12 @@ class StreamSlide extends React.PureComponent {
                                 </Card.Description>
                         </Card.Content>
                         <Card.Content className='carousel-extra' extra>
-                            <a>
-                                <Icon name='twitch' circular className={'social'}/>
-                            </a>
-                            <a>
-                                <Icon name='youtube' circular className={'social'}/>
-                            </a>
-                            <a>
-                                <Icon name='discord' circular className={'social'}/>
-                            </a>
+                            {
+                                (socials ? Object.keys(socials).map((social, i) => (
+                                    <a key={i} href={socials[social]} target="_blank">
+                                        <Icon name={social} circular className={'social'}/>
+                                    </a>)) : '')
+                            }
                         </Card.Content>
                     </Card>
                 </div>

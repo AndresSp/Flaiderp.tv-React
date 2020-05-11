@@ -7,6 +7,9 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const ExtensionReloader  = require('webpack-extension-reloader');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebExtWebpackPlugin = require('@ianwalter/web-ext-webpack-plugin');
+const ChunksWebpackPlugin = require('chunks-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
+const DashboardPlugin = require("webpack-dashboard/plugin");
 
 function generateHtmlPlugins(items) {
     return items.map((name) => new HtmlWebpackPlugin(
@@ -42,10 +45,22 @@ module.exports = (env, argv) =>{
         chunkFilename: '[name]',
         libraryTarget: "umd"
     },
-    devtool: 'inline-source-map',
+    devtool: '',
     resolve: {
         extensions: ['.js', '.jsx']
     },
+    // optimization: {
+	// 	splitChunks: {
+    //         chunks: 'all'
+	// 		// cacheGroups: {
+	// 		// 	commons: {
+	// 		// 		test: /[\\/]node_modules[\\/]/,
+	// 		// 		name: 'vendors',
+	// 		// 		chunks: 'all'
+	// 		// 	}
+	// 		// }
+	// 	}
+	// },
     module: {
         rules: [
             {
@@ -87,6 +102,14 @@ module.exports = (env, argv) =>{
         ]
     },
     plugins: [
+        new DashboardPlugin(),
+        new ChunksWebpackPlugin(),
+        new BrotliPlugin({
+			asset: '[path].br[query]',
+			test: /\.(js|css|html|svg)$/,
+			threshold: 10240,
+			minRatio: 0.8
+		}),
         new CleanWebpackPlugin({
             cleanStaleWebpackAssets: false
         }),
