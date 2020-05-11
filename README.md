@@ -48,7 +48,7 @@ npm test
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate. (TODO)
+Please make sure to update tests as appropriate.
 
 ## Author
 [AndresSp](https://github.com/AndresSp)
