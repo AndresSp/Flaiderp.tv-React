@@ -21,7 +21,9 @@ npm install
 ```
 Use a browser to test the extension:
 
-(Chrome) More Tools > Extensions > Enable Developer Mode > Load unpacked (Load root project's directory)
+(Chrome) More Tools > Extensions > Enable Developer Mode > Load unpacked (Load project's directory)
+
+(Firefox) about:addons > Debug Addons > Load Temporary Add-on... > Select manifest's project directory
 
 ## Development
 This repository includes scripts to enable easier development and testing of the extension. To start the whole application ecosystem for development,  run the following command
