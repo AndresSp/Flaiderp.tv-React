@@ -1,13 +1,15 @@
 {
   "name": "flaiderp.tv",
-  "version": "2.0.0",
-  "description": "-",
+  "version": "2.0.1",
+  "description": "¡Notifica cuando tus streamers favoritos están en línea!",
   "main": "background.js",
   "scripts": {
     "start": "npm run remotedev & npm run build:dev",
     "remotedev": "remotedev --hostname=localhost --port=9000",
     "build:dev": "NODE_ENV=development webpack --watch --progress",
-    "build": "NODE_ENV=production webpack --progress",
+    "build:dev:win": "set NODE_ENV=development&&webpack --watch --progress",
+    "build:prod": "NODE_ENV=production webpack --progress",
+    "build:prod:win": "set NODE_ENV=production&&webpack --progress",
     "prepublish": "npm run build",
     "test": "NODE_ENV=test jest",
     "coverage": "NODE_ENV=test jest --coverage"
@@ -22,10 +24,6 @@
   ],
   "author": "AndresSp",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/AndresSp/Flaiderp.tv-React/issues"
-  },
-  "homepage": "https://github.com/AndresSp/Flaiderp.tv-React#readme",
   "browserslist": "> 1%,last 2 versions",
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -38,6 +36,7 @@
     "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",
     "brotli-webpack-plugin": "^1.1.0",
+    "chrome-manifest": "^0.2.9",
     "chunks-webpack-plugin": "^6.1.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",

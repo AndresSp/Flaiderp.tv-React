@@ -17,8 +17,7 @@ const syncStorageConfigToConfigReducer = {
 
 const syncStorageConfigToAuthReducer = {
   key: 'auth',
-  storage: /*getBrowser() == 'FIREFOX'? localStorage :*/ syncStorage,
-  whitelist: ['accessToken']
+  storage: /*getBrowser() == 'FIREFOX'? localStorage :*/ syncStorage
 }
 
 const undoableConfig = {
