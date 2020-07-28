@@ -135,12 +135,12 @@ export const uninstall = async () => {
 
 export const getBrowser = () => {
     const browser = Bowser.parse(window.navigator.userAgent)[0]
-
     switch (browser) {
         case 'C': return CHROME
         case 'F': return FIREFOX
         case 'x': return EDGE
-        default: return null
+        case 'O': return CHROME
+        default: return CHROME
     }
 }
 
