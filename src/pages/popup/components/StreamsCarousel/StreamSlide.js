@@ -54,7 +54,11 @@ class StreamSlide extends React.PureComponent {
                             {
                                 (socials ? Object.keys(socials).map((social, i) => (
                                     <a key={i} href={socials[social]} target="_blank">
-                                        <Icon name={social} circular className={'social'}/>
+                                        {
+                                            social.includes('custom') ? 
+                                            <Icon circular className={`social ${social}`}/> :
+                                            <Icon name={social} circular className={'social'}/>
+                                        }
                                     </a>)) : '')
                             }
                         </Card.Content>

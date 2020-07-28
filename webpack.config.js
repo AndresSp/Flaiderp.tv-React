@@ -9,7 +9,6 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WebExtWebpackPlugin = require('@ianwalter/web-ext-webpack-plugin');
 const ChunksWebpackPlugin = require('chunks-webpack-plugin');
 const BrotliPlugin = require('brotli-webpack-plugin');
-const DashboardPlugin = require("webpack-dashboard/plugin");
 
 function generateHtmlPlugins(items) {
     return items.map((name) => new HtmlWebpackPlugin(
@@ -102,7 +101,6 @@ module.exports = (env, argv) =>{
         ]
     },
     plugins: [
-        new DashboardPlugin(),
         new ChunksWebpackPlugin(),
         new BrotliPlugin({
 			asset: '[path].br[query]',

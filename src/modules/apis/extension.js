@@ -2,12 +2,12 @@ import * as browser from 'webextension-polyfill'
 import * as Bowser from "bowser-mini";
 import { CLIENT_ID_CHROME, CLIENT_ID_FIREFOX, CLIENT_ID_EDGE } from "../../env.json";
 
-export const authExtension = async () => {
+export const authExtension = async (showPrompt) => {
     const client_id = getClientByBrowser(getBrowser());
     const redirectUri = browser.identity.getRedirectURL(); 
     const auth_url = "https://id.twitch.tv/oauth2/authorize?client_id=" + client_id + "&redirect_uri=" + redirectUri + "&response_type=token";
 
-    const redirectUrl = await browser.identity.launchWebAuthFlow({'url': auth_url, 'interactive': true});
+    const redirectUrl = await browser.identity.launchWebAuthFlow({'url': auth_url, 'interactive': showPrompt});
 
     const redirectRe = new RegExp(redirectUri + '[#\?](.*)');
     const matches = redirectUrl.match(redirectRe);
@@ -135,12 +135,12 @@ export const uninstall = async () => {
 
 export const getBrowser = () => {
     const browser = Bowser.parse(window.navigator.userAgent)[0]
-
     switch (browser) {
         case 'C': return CHROME
         case 'F': return FIREFOX
         case 'x': return EDGE
-        default: return null
+        case 'O': return CHROME
+        default: return CHROME
     }
 }
 

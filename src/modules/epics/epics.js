@@ -11,7 +11,7 @@ import { AUTH, authSuccessfully, authError, auth, clearToken, CLEAR_TOKEN, VALID
 
 export const authEpic = (action$, state$) => action$.pipe(
     ofType(AUTH),
-    switchMap(action => from(authExtension()).pipe(
+    switchMap(action => from(authExtension(!state$.value.auth.accessToken)).pipe(
         concatMap(result => result? [
             authSuccessfully(result), 
             fetchStreamersBio([
