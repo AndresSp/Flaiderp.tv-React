@@ -8,13 +8,15 @@ body, html {
 }
 
 .carousel-image {
+    display: flex;            /* establish flex container */
+    flex-direction: column;   /* align children vertically (column format) */
+    justify-content: center;  /* center children vertically */
+    align-items: center;      /* center column horizontally */
     background-position:0 22%;
 	background-repeat:no-repeat;
     background-size:cover;
     background-color: lightgray;
     height: 193px;
-    /* object-fit: cover;
-    object-position: 0 22%; */
 }
 
 .carousel-image-placeholder {
@@ -44,6 +46,11 @@ body, html {
 
 .control-icon {
     margin: 0 !important;
+}
+
+
+.white-icon {
+    color: white !important;
 }
 
 button:disabled {

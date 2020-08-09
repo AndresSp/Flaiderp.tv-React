@@ -3,21 +3,21 @@ import undoable, { includeAction } from 'redux-undo'
 import { configReducer } from './config'
 import { fetchStreamsReducer } from './fetchStreams'
 import { persistReducer } from 'redux-persist'
-import { syncStorage, localStorage } from 'redux-persist-webextension-storage'
+import { syncStorage } from 'redux-persist-webextension-storage'
 import { notificationsReducer } from './notifications'
 import { fetchStreamersBiosReducer } from './fetchStreamersBio'
 import { FETCH_STREAMS_SUCCESSFULLY } from '../../../shared/actions/fetchStreams'
 import { authReducer } from './auth'
-import { getBrowser } from '../../../modules/apis/extension'
+import storage from 'redux-persist/lib/storage'
 
 const syncStorageConfigToConfigReducer = {
   key: 'config',
-  storage: /*getBrowser() == 'FIREFOX'? localStorage :*/ syncStorage
+  storage: syncStorage
 }
 
 const syncStorageConfigToAuthReducer = {
   key: 'auth',
-  storage: /*getBrowser() == 'FIREFOX'? localStorage :*/ syncStorage
+  storage: storage //localStorage
 }
 
 const undoableConfig = {
