@@ -2,6 +2,7 @@ import React from 'react';
 import { Slide, Image } from 'pure-react-carousel';
 import { Card, Icon, Placeholder, Label, Segment } from 'semantic-ui-react';
 import TwitchPlayerEmbed from './TwitchPlayerEmbed';
+import { getBrowser } from '../../../../modules/apis/extension';
 
 const styles = {}
 
@@ -10,12 +11,13 @@ class StreamSlide extends React.PureComponent {
         super(props)
     }
 
+    isFirefox = () => getBrowser() === 'FIREFOX'
+
     imgPlaceHolder = () => (
         <Placeholder>
             <Placeholder.Image className='carousel-image-placeholder' />
         </Placeholder>
     )
-
     
 
     render(){
@@ -27,7 +29,19 @@ class StreamSlide extends React.PureComponent {
                     <Card  fluid>
                         { 
                             showLive ? 
-                            <TwitchPlayerEmbed preview={image} channel={channel}/> : 
+                            (this.isFirefox? <TwitchPlayerEmbed preview={image} channel={channel} /> :
+                                <a href={`https://www.twitch.tv/${channel}`} target='_blank'>
+                                    <Image 
+                                    hasMasterSpinner={false} 
+                                    isBgImage={true} 
+                                    tag='div' 
+                                    renderLoading={this.imgPlaceHolder()}
+                                    renderError={imageOnError}
+                                    src={image} 
+                                    className='carousel-image'>
+                                            <Icon name='external' inverted size='big' color='grey'/>
+                                    </Image>
+                                </a>) : 
                             <Image 
                             hasMasterSpinner={false} 
                             isBgImage={true} 
