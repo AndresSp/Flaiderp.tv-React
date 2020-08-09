@@ -7,11 +7,13 @@ import { getBrowser } from '../../../../modules/apis/extension';
 const styles = {}
 
 class StreamSlide extends React.PureComponent {
+
+    isFirefox;
+    
     constructor(props){
         super(props)
+        this.isFirefox = getBrowser() === 'FIREFOX'
     }
-
-    isFirefox = () => getBrowser() === 'FIREFOX'
 
     imgPlaceHolder = () => (
         <Placeholder>
@@ -29,8 +31,7 @@ class StreamSlide extends React.PureComponent {
                     <Card  fluid>
                         { 
                             showLive ? 
-                            (this.isFirefox? <TwitchPlayerEmbed preview={image} channel={channel} /> :
-                                <a href={`https://www.twitch.tv/${channel}`} target='_blank'>
+                            (this.isFirefox? <a href={`https://www.twitch.tv/${channel}`} target='_blank'>
                                     <Image 
                                     hasMasterSpinner={false} 
                                     isBgImage={true} 
@@ -41,7 +42,7 @@ class StreamSlide extends React.PureComponent {
                                     className='carousel-image'>
                                             <Icon name='external' inverted size='big' color='grey'/>
                                     </Image>
-                                </a>) : 
+                                </a> : <TwitchPlayerEmbed preview={image} channel={channel} />) : 
                             <Image 
                             hasMasterSpinner={false} 
                             isBgImage={true} 
