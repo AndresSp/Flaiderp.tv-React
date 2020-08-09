@@ -1,7 +1,7 @@
 {
     "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv5hn4P+C8HjDgQB6dhtw80/kKi45DMELODbHxZX8A+06dB7DcU1UXsBjq+YFCtN9x/S4j7gyJeUfDw5wqttKYMeC3XiLj4/nY2jAUKTYWzFrkdBt1+zz5+HD360vwtybtbcJRKteoAkfMgfqJvgoKsi34b6TXVtfW2q5gbSJQIIr+QwrUxWm0BP1dmjoZ8MqwCL+D2cUXWwg9DW+CeCCIvL83wbc+TQM/TXw1g7yKBjTFxWoJkMyMf7BChhtVc+hl2P7Ay4YE7+Hd4oGRuWPu95u0Hrvr0XkRfX+0dEXtmuk7seddAFLgZqGZEGWmZ7rJkRIDBWeTwXkV8FdKxJJ+wIDAQAB",
     "name": "Flaiderp.tv",
-    "version": "2.1.1",
+    "version": "2.1.2",
     "description": "¡Notifica cuando tus streamers favoritos están en línea!",
     "manifest_version": 2,
     "author": "AndresSp",
