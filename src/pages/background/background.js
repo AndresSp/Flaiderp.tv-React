@@ -3,11 +3,10 @@
 import "babel-polyfill";
 import * as browser from 'webextension-polyfill'
 import store from './store'
-import { fetchStreams, checkDiffStreams, FETCH_STREAMS_CLEARED } from "../../shared/actions/fetchStreams";
+import { fetchStreams, checkDiffStreams } from "../../shared/actions/fetchStreams";
 import { fetchStreamersBio } from "../../shared/actions/fetchStreamersBio";
-import { addNotificationToQueue, showNotification, updateBadge } from '../../shared/actions/notifications';
+import { showNotification } from '../../shared/actions/notifications';
 import { onClickNotificationHandler } from '../../modules/apis/extension'
-import { CLIENT_ID } from './../../env.json';
 import { auth, validateToken } from "../../shared/actions/auth";
 
 browser.runtime.onUpdateAvailable.addListener(async (details) => {
@@ -39,6 +38,13 @@ browser.runtime.onInstalled.addListener(async (details) => {
 
    await browser.alarms.create('authAgain', { delayInMinutes: 1440, periodInMinutes: 1440 })
     //each day
+   await browser.alarms.create('validateToken', { when: 0, periodInMinutes: 30 })
+   await browser.alarms.create('fetchStreamersBio', { when: 0, periodInMinutes: 60 })
+   await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
+ })
+
+ browser.runtime.onStartup.addListener(async () => {
+   await browser.alarms.create('authAgain', { delayInMinutes: 1440, periodInMinutes: 1440 })
    await browser.alarms.create('validateToken', { when: 0, periodInMinutes: 30 })
    await browser.alarms.create('fetchStreamersBio', { when: 0, periodInMinutes: 60 })
    await browser.alarms.create('fetchStreams', { when: 0, periodInMinutes: 1 })
