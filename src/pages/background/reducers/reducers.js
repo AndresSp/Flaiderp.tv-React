@@ -20,6 +20,11 @@ const syncStorageConfigToAuthReducer = {
   storage: storage //localStorage
 }
 
+const syncStorageConfigToFetchBiosReducer = {
+  key: 'fetchBios',
+  storage: storage //localStorage
+}
+
 const undoableConfig = {
   limit: 10,
   filter: includeAction(FETCH_STREAMS_SUCCESSFULLY)
@@ -29,7 +34,7 @@ const undoableConfig = {
 export default combineReducers({
     config: persistReducer(syncStorageConfigToConfigReducer, configReducer),
     auth: persistReducer(syncStorageConfigToAuthReducer, authReducer),
-    fetchBios: fetchStreamersBiosReducer,
+    fetchBios: persistReducer(syncStorageConfigToFetchBiosReducer, fetchStreamersBiosReducer),
     fetchStreams: undoable(fetchStreamsReducer, undoableConfig),
     notifications: notificationsReducer
 })
